@@ -10,7 +10,7 @@ JAVASCRIPT
 {
   "APLICAÇÕES": [
     BANCO DE DADOS: [ 
-        MySQL : { versão : "8.0.18",
+        Postgresql : { versão : "PostgreSQL 12.2",
         Script de Criação: "",
         user: "root",
         password: "admin"

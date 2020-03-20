@@ -1,4 +1,4 @@
-package com.gregs;
+package br.ufpr.tcc.gregs;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

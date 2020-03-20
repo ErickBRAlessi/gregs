@@ -1,4 +1,4 @@
-package com.gregs;
+package br.ufpr.tcc.gregs;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
