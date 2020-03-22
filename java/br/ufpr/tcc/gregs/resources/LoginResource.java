@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.ufpr.tcc.gregs.models.Retorno;
 import br.ufpr.tcc.gregs.models.Usuario;
 import br.ufpr.tcc.gregs.requests.LoginRequest;
-import br.ufpr.tcc.gregs.security.Token;
+import br.ufpr.tcc.gregs.security.TokenUtil;
 import br.ufpr.tcc.gregs.service.IUsuarioService;
 
 @RestController
@@ -22,19 +22,27 @@ public class LoginResource {
 	@PostMapping("/login")
 	public Retorno inserirUsuario(@RequestBody LoginRequest request) {
 		Usuario user = iUsuarioService.findUsuario(request.getEmail().trim().toLowerCase());
-		
-		//MD5 feito na classe LoginRequest no set
-		if(!user.getPassword().equals(request.getPassword())) {
-			return new Retorno("Usuario Invalido", null);
+		// MD5 feito na classe LoginRequest no set
+		if (user == null) {
+			return new Retorno("Usuario Inválido", null);
 		}
-		Token.isLoginValid(Token.getTokenEncode(user));
-		return new Retorno("Logado com Sucesso", Token.getTokenEncode(user));
+		if (!user.getPassword().equals(request.getPassword())) {
+			return new Retorno("Senha Inválida", null);
+		}
+		if(TokenUtil.isLoginValid(TokenUtil.getTokenEncode(user))) {
+			return new Retorno("Logado com Sucesso", TokenUtil.getTokenEncode(user));
+		}
+		return new Retorno("Não foi possível gerar Token de Login", null);
 	}
-	
+
 	@GetMapping("/logado")
 	public Retorno getUsuario(@RequestParam(value = "token", defaultValue = "") String token) {
 		try {
-		return new Retorno("Usuario logado", Token.getUsuarioLogado(token));
+			Usuario user = TokenUtil.getUsuarioLogado(token);
+			if (user != null) {
+				return new Retorno("Usuario logado", TokenUtil.getUsuarioLogado(token));
+			}
+			return new Retorno("Usuario desconhecido ou não logado", null);
 		} catch (Exception e) {
 			return new Retorno("Usuario desconhecido ou não logado", null);
 		}

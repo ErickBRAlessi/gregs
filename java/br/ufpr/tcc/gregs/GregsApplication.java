@@ -16,6 +16,7 @@ import br.ufpr.tcc.gregs.service.IUsuarioService;
 
 @SpringBootApplication
 public class GregsApplication {
+	private static final String ADMIN = "admin";
 	
 	@Autowired
 	IPermissaoService iPermissaoService;
@@ -29,12 +30,12 @@ public class GregsApplication {
 
 	@Bean
 	void dataBaseFirstLoad() {		
-		System.out.println("CARGA NA BASE DE DADOS INICIAL");
+		//Carga na base
 		Set<Permissao> permissoesUserAdm = new HashSet<>();
 		Set<Permissao> permissoesUserCli = new HashSet<>();
 		Set<Permissao> permissoesUserVis = new HashSet<>();
 
-		Permissao admin = new Permissao(1,"admin");
+		Permissao admin = new Permissao(1, ADMIN);
 		Permissao cliente = new Permissao(2,"cliente");
 		Permissao visitante = new Permissao(3, "visitante");
 		permissoesUserAdm.add(admin);
@@ -49,9 +50,9 @@ public class GregsApplication {
 		permissoesUserCli.add(visitante);
 		
 		permissoesUserVis.add(visitante);
-		Usuario userAdm = new Usuario(1, "adm@adm.com", "ADMINISTRADOR", MD5.toMD5("admin"), permissoesUserAdm);
-		Usuario userCli = new Usuario(2, "cli@cli.com", "CLIENTE", MD5.toMD5("admin"), permissoesUserCli);
-		Usuario userVis = new Usuario(3, "vis@vis.com", "VISITANTE", MD5.toMD5("admin"), permissoesUserVis);
+		Usuario userAdm = new Usuario(1, "adm@adm.com", "ADMINISTRADOR", MD5.toMD5(ADMIN), permissoesUserAdm);
+		Usuario userCli = new Usuario(2, "cli@cli.com", "CLIENTE", MD5.toMD5(ADMIN), permissoesUserCli);
+		Usuario userVis = new Usuario(3, "vis@vis.com", "VISITANTE", MD5.toMD5(ADMIN), permissoesUserVis);
 		
 		iUsuarioService.inserirUsuario(userAdm);
 		iUsuarioService.inserirUsuario(userCli);

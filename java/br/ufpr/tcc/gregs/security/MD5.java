@@ -5,6 +5,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class MD5 {
+	
+	private MD5() {}
 
 	public static String toMD5(String input) {
 		try { 
@@ -20,16 +22,17 @@ public class MD5 {
 			BigInteger no = new BigInteger(1, messageDigest);
 
 			// Convert message digest into hex value
-			String hashtext = no.toString(16);
+			StringBuilder hashtext = new StringBuilder(no.toString(16));
 			while (hashtext.length() < 32) {
-				hashtext = "0" + hashtext;
+				hashtext.append("0" + hashtext);
 			}
-			return hashtext;
+			return hashtext.toString();
 		}
 
 		// For specifying wrong message digest algorithms
 		catch (NoSuchAlgorithmException e) {
-			throw new RuntimeException(e);
+			//TODO throw error, e tratar nas chamadas.
+			return "";
 		}
 	}
 

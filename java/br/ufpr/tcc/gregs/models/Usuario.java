@@ -9,13 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
-import org.hibernate.validator.constraints.NotBlank;
-
-import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name = "usuario")
@@ -52,6 +49,26 @@ public class Usuario {
 			@JoinColumn(name = "fk_role") })
 	private Set<Permissao> permissoes = new HashSet<>();
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		return (id != other.id);
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -81,8 +98,8 @@ public class Usuario {
 	}
 
 	public void setPermissoes(Set<Permissao> permissoes) {
-		if(permissoes != null) {
-			this.permissoes = permissoes;		
+		if (permissoes != null) {
+			this.permissoes = permissoes;
 		}
 	}
 

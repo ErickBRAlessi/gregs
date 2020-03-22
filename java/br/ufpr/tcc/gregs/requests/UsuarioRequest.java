@@ -2,6 +2,7 @@ package br.ufpr.tcc.gregs.requests;
 
 public class UsuarioRequest {
 
+	private long id;
 	private String email;
 	private String nome;
 	private String password;
@@ -37,6 +38,14 @@ public class UsuarioRequest {
 
 	public void setPermissaoId(long permissaoId) {
 		this.permissaoId = permissaoId;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 }

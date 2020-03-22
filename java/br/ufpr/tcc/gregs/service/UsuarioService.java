@@ -1,6 +1,5 @@
 package br.ufpr.tcc.gregs.service;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
