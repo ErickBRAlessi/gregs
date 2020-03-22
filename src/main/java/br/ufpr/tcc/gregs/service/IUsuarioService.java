@@ -11,7 +11,7 @@ public interface IUsuarioService {
 	
 	public Usuario findUsuario(Long id);
 	
-	public List<Usuario> findUsuario(String nome);
+	public Usuario findUsuario(String email);
 	
 	public void inserirUsuario(Usuario usuario);
 	

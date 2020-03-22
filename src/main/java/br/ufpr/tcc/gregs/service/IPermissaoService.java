@@ -10,5 +10,7 @@ public interface IPermissaoService {
 	public List<Permissao> findAll();
 	
 	public void inserir(Permissao permissao);
+	
+	public Permissao buscarId(long id);
 
 }

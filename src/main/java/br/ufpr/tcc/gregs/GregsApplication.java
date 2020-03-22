@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 
 import br.ufpr.tcc.gregs.models.Permissao;
 import br.ufpr.tcc.gregs.models.Usuario;
+import br.ufpr.tcc.gregs.security.MD5;
 import br.ufpr.tcc.gregs.service.IPermissaoService;
 import br.ufpr.tcc.gregs.service.IUsuarioService;
 
@@ -48,10 +49,9 @@ public class GregsApplication {
 		permissoesUserCli.add(visitante);
 		
 		permissoesUserVis.add(visitante);
-		
-		Usuario userAdm = new Usuario(1, "ADMINISTRADOR", "admin", permissoesUserAdm);
-		Usuario userCli = new Usuario(2, "CLIENTE", "admin", permissoesUserCli);
-		Usuario userVis = new Usuario(3, "VISITANTE", "admin", permissoesUserVis);
+		Usuario userAdm = new Usuario(1, "adm@adm.com", "ADMINISTRADOR", MD5.toMD5("admin"), permissoesUserAdm);
+		Usuario userCli = new Usuario(2, "cli@cli.com", "CLIENTE", MD5.toMD5("admin"), permissoesUserCli);
+		Usuario userVis = new Usuario(3, "vis@vis.com", "VISITANTE", MD5.toMD5("admin"), permissoesUserVis);
 		
 		iUsuarioService.inserirUsuario(userAdm);
 		iUsuarioService.inserirUsuario(userCli);

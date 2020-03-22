@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 
 public class SessionFactory {
 	
+	//TODO Make custom HQL queries
+	
 	@Autowired
 	private EntityManagerFactory entityManagerFactory;
 
