@@ -58,12 +58,10 @@ public class UsuarioService implements IUsuarioService {
 		repository.delete(usuario);
 	}
 
-	//TODO Fix it
 	@Override
 	public void deletarUsuario(long id) {
 		Usuario user = findUsuario(id);
-		user.setPermissoes(null);
-		repository.save(user);
+		user.removerTodasPermissoes();
 		repository.deleteById(id);
 	}
 
