@@ -66,7 +66,7 @@ public class Usuario {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		return (id != other.id);
+		return (id == other.id);
 	}
 
 	public long getId() {
@@ -100,6 +100,12 @@ public class Usuario {
 	public void setPermissoes(Set<Permissao> permissoes) {
 		if (permissoes != null) {
 			this.permissoes = permissoes;
+		}
+	}
+	
+	public void removerTodasPermissoes() {
+		for(Permissao p : permissoes) {
+			permissoes.remove(p);
 		}
 	}
 

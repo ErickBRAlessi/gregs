@@ -44,7 +44,7 @@ public class LoginResource {
 			}
 			return new Retorno("Usuario desconhecido ou não logado", null);
 		} catch (Exception e) {
-			return new Retorno("Usuario desconhecido ou não logado", null);
+			return new Retorno("Usuario desconhecido ou não logado", e.getMessage());
 		}
 	}
 

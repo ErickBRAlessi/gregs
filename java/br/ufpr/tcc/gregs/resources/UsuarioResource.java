@@ -32,7 +32,7 @@ public class UsuarioResource {
 
 	// TESTA SE USUARIO É ADM
 	@GetMapping("/usuarios/all")
-	public Retorno listarPermissoes(@RequestHeader("Token") String token) {
+	public Retorno listarUsuarios(@RequestHeader("Token") String token) {
 		if (TokenUtil.isUsuarioAdmin(token)) {
 			List<Usuario> usuarios;
 			try {
@@ -43,7 +43,7 @@ public class UsuarioResource {
 			}
 			return new Retorno("Sucesso", usuarios);
 		}
-		return new Retorno("Usuário sem Autorização", null);
+		return new Retorno("Usuário sem Autorização ou Expirado", null);
 	}
 
 	@PutMapping("/usuario")

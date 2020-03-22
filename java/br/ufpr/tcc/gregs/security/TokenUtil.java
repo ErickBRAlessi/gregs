@@ -69,6 +69,10 @@ public class TokenUtil {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			Token tk = mapper.readValue(str, Token.class);
+			//se não for visitante e tiver expirado não é valido
+			if(permissaoId != 3 && !tk.getExpirassao().after(new Date(System.currentTimeMillis()))) {
+				return false;
+			}
 			return tk.getUsuario().getPermissoes().contains(new Permissao(permissaoId, ""));
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();

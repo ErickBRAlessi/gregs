@@ -1,12 +1,16 @@
 package br.ufpr.tcc.gregs.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.ufpr.tcc.gregs.jparepositories.PermissaoRepository;
 import br.ufpr.tcc.gregs.jparepositories.UsuarioRepository;
+import br.ufpr.tcc.gregs.models.Permissao;
 import br.ufpr.tcc.gregs.models.Usuario;
 
 @Service
@@ -14,6 +18,8 @@ public class UsuarioService implements IUsuarioService {
 
 	@Autowired
 	private UsuarioRepository repository;
+	
+	@Autowired PermissaoRepository repositoryPerm;
 
 	@Override
 	public List<Usuario> findAll() {
@@ -48,11 +54,16 @@ public class UsuarioService implements IUsuarioService {
 
 	@Override
 	public void deletarUsuario(Usuario usuario) {
+		usuario.removerTodasPermissoes();
 		repository.delete(usuario);
 	}
 
+	//TODO Fix it
 	@Override
 	public void deletarUsuario(long id) {
+		Usuario user = findUsuario(id);
+		user.setPermissoes(null);
+		repository.save(user);
 		repository.deleteById(id);
 	}
 

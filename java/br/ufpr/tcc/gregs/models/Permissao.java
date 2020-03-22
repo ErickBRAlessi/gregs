@@ -3,11 +3,14 @@ package br.ufpr.tcc.gregs.models;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -49,8 +52,7 @@ public class Permissao {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -68,8 +70,7 @@ public class Permissao {
 		if (getClass() != obj.getClass())
 			return false;
 		Permissao other = (Permissao) obj;
-		return (id != other.id);
+		return (id == other.id);
 	}
-
 
 }
