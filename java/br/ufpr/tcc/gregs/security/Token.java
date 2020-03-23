@@ -5,14 +5,14 @@ import java.util.Date;
 import br.ufpr.tcc.gregs.models.Usuario;
 
 public class Token {
-	private static final long sessionTime = 60000 * 15;
+	private static final long SESSIONTIME = 60000L * 15L;
 	
 	public Token() {}
 	
 	
 	public Token(Usuario usuario) {
 		this.usuario = usuario;
-		this.expirassao = new Date(System.currentTimeMillis() + sessionTime);
+		this.expirassao = new Date(System.currentTimeMillis() + SESSIONTIME);
 	}
 	
 	private Date expirassao;

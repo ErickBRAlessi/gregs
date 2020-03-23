@@ -1,5 +1,7 @@
 package br.ufpr.tcc.gregs.requests;
 
+import java.security.NoSuchAlgorithmException;
+
 import br.ufpr.tcc.gregs.security.MD5;
 
 public class LoginRequest {
@@ -20,7 +22,7 @@ public class LoginRequest {
 		return password;
 	}
 
-	public void setPassword(String password) {
+	public void setPassword(String password) throws NoSuchAlgorithmException {
 		this.password = MD5.toMD5(password);
 	}
 	

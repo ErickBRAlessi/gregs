@@ -8,7 +8,7 @@ public class MD5 {
 	
 	private MD5() {}
 
-	public static String toMD5(String input) {
+	public static String toMD5(String input) throws NoSuchAlgorithmException {
 		try { 
 			  
 			// Static getInstance method is called with hashing MD5
@@ -31,8 +31,8 @@ public class MD5 {
 
 		// For specifying wrong message digest algorithms
 		catch (NoSuchAlgorithmException e) {
-			//TODO throw error, e tratar nas chamadas.
-			return "";
+			e.printStackTrace();
+			throw e;
 		}
 	}
 

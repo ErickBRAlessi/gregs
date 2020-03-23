@@ -49,13 +49,13 @@ public class UsuarioResource {
 	@PutMapping("/usuario")
 	public Retorno inserirUsuario(@RequestBody UsuarioRequest request) {
 		Usuario usuario = new Usuario();
-		usuario.setNome(request.getNome());
-		usuario.setEmail(request.getEmail());
-		usuario.setPassword(MD5.toMD5(request.getPassword()));
-		Set<Permissao> permissoes = new HashSet<>();
-		permissoes.add(iPermissaoService.buscarId(request.getPermissaoId()));
-		usuario.setPermissoes(permissoes);
 		try {
+			usuario.setNome(request.getNome());
+			usuario.setEmail(request.getEmail());
+			usuario.setPassword(MD5.toMD5(request.getPassword()));
+			Set<Permissao> permissoes = new HashSet<>();
+			permissoes.add(iPermissaoService.buscarId(request.getPermissaoId()));
+			usuario.setPermissoes(permissoes);
 			iUsuarioService.inserirUsuario(usuario);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -64,7 +64,7 @@ public class UsuarioResource {
 		return new Retorno("Usuario Inserido com Sucesso", usuario);
 	}
 
-	//Deleta pelo email
+	// Deleta pelo email
 	@DeleteMapping("/usuario")
 	public Retorno deletarUsuario(@RequestHeader("Token") String token, @RequestBody UsuarioRequest request) {
 		if (TokenUtil.isUsuarioAdmin(token)) {

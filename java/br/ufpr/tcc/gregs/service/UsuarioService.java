@@ -1,16 +1,13 @@
 package br.ufpr.tcc.gregs.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.ufpr.tcc.gregs.jparepositories.PermissaoRepository;
 import br.ufpr.tcc.gregs.jparepositories.UsuarioRepository;
-import br.ufpr.tcc.gregs.models.Permissao;
 import br.ufpr.tcc.gregs.models.Usuario;
 
 @Service
