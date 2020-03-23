@@ -2,11 +2,8 @@ package br.ufpr.tcc.gregs.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import br.ufpr.tcc.gregs.jparepositories.PermissaoRepository;
 import br.ufpr.tcc.gregs.jparepositories.UsuarioRepository;
 import br.ufpr.tcc.gregs.models.Usuario;
 
@@ -15,8 +12,6 @@ public class UsuarioService implements IUsuarioService {
 
 	@Autowired
 	private UsuarioRepository repository;
-	
-	@Autowired PermissaoRepository repositoryPerm;
 
 	@Override
 	public List<Usuario> findAll() {
@@ -41,8 +36,8 @@ public class UsuarioService implements IUsuarioService {
 	public Usuario findUsuario(String email) {
 		// TODO FIX THIS
 		List<Usuario> usuarios = (List<Usuario>) repository.findAll();
-		for(Usuario user : usuarios) {
-			if(user.getEmail().equalsIgnoreCase(email)) {
+		for (Usuario user : usuarios) {
+			if (user.getEmail().equalsIgnoreCase(email)) {
 				return user;
 			}
 		}
