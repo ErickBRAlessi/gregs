@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.ufpr.tcc.gregs.graph.Neo4JSessionFactory;
 import br.ufpr.tcc.gregs.models.Permissao;
 import br.ufpr.tcc.gregs.models.Retorno;
 import br.ufpr.tcc.gregs.models.Usuario;
@@ -79,4 +80,5 @@ public class UsuarioResource {
 		}
 		return new Retorno("Usuário sem Autorização", null);
 	}
+
 }

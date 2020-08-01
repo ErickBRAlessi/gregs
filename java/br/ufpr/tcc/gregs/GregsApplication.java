@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import br.ufpr.tcc.gregs.graph.Neo4JSessionFactory;
 import br.ufpr.tcc.gregs.models.Permissao;
 import br.ufpr.tcc.gregs.models.Usuario;
 import br.ufpr.tcc.gregs.security.MD5;
@@ -57,6 +58,9 @@ public class GregsApplication {
 			iUsuarioService.inserirUsuario(userAdm);
 			iUsuarioService.inserirUsuario(userCli);
 			iUsuarioService.inserirUsuario(userVis);
+			
+			Neo4JSessionFactory.printGreeting("BOLINHA");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
