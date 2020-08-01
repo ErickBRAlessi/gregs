@@ -59,8 +59,6 @@ public class GregsApplication {
 			iUsuarioService.inserirUsuario(userCli);
 			iUsuarioService.inserirUsuario(userVis);
 			
-			Neo4JSessionFactory.printGreeting("BOLINHA");
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
