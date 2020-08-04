@@ -8,9 +8,8 @@ import org.neo4j.driver.Result;
 import org.neo4j.driver.Session;
 import org.neo4j.driver.Transaction;
 import org.neo4j.driver.TransactionWork;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +17,9 @@ import br.ufpr.tcc.gregs.graph.Neo4JSessionFactory;
 
 @RestController
 public class TagsResource {
+	
 
+	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping("/tags")
 	public void putTag(@RequestBody List<String> tags) {
 		try {
