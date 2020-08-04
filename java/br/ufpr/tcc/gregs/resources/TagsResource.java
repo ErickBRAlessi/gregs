@@ -22,6 +22,7 @@ public class TagsResource {
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping("/tags")
 	public void putTag(@RequestBody List<String> tags) {
+		
 		try {
 			Session s = Neo4JSessionFactory.getSession();
 			tags.forEach(t -> s.writeTransaction(new TransactionWork<String>() {
