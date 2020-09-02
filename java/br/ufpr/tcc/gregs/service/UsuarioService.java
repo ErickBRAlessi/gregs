@@ -12,6 +12,10 @@ public class UsuarioService implements IUsuarioService {
 
 	@Autowired
 	private UsuarioRepository repository;
+	
+	public Usuario findByEmail(String email) {
+		return repository.findByEmail(email);
+	}
 
 	@Override
 	public List<Usuario> findAll() {
@@ -32,6 +36,7 @@ public class UsuarioService implements IUsuarioService {
 		return null;
 	}
 
+	
 	@Override
 	public Usuario findUsuario(String email) {
 		// TODO FIX THIS

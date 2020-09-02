@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,9 +24,9 @@ public class Usuario {
 		this.permissoes.add(new Permissao(3, "visitante"));
 	}
 
-	public Usuario(long id, String email, String nome, String password, Set<Permissao> permissoes) {
+	public Usuario(long id, String email, String password, Pessoa pessoa, Set<Permissao> permissoes) {
 		this.id = id;
-		this.nome = nome;
+		this.pessoa = pessoa;
 		this.email = email;
 		this.password = password;
 		this.permissoes = permissoes;
@@ -35,8 +37,9 @@ public class Usuario {
 	@Column(name = "pk_user_id", nullable = false)
 	private long id;
 
-	@Column(name = "user_name")
-	private String nome;
+	@OneToOne
+	@JoinColumn(name = "fk_pessoa_id")
+	private Pessoa pessoa;
 
 	@Column(name = "user_password", nullable = false)
 	private String password;
@@ -48,6 +51,12 @@ public class Usuario {
 	@JoinTable(name = "usuario_permissao", joinColumns = { @JoinColumn(name = "fk_user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "fk_role") })
 	private Set<Permissao> permissoes = new HashSet<>();
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", pessoa=" + pessoa + ", password=" + password + ", email=" + email
+				+ ", permissoes=" + permissoes + "]";
+	}
 
 	@Override
 	public int hashCode() {
@@ -77,14 +86,6 @@ public class Usuario {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -102,9 +103,9 @@ public class Usuario {
 			this.permissoes = permissoes;
 		}
 	}
-	
+
 	public void removerTodasPermissoes() {
-		for(Permissao p : permissoes) {
+		for (Permissao p : permissoes) {
 			permissoes.remove(p);
 		}
 	}
@@ -115,5 +116,13 @@ public class Usuario {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 }

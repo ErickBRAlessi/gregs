@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.ufpr.tcc.gregs.graph.Neo4JSessionFactory;
 import br.ufpr.tcc.gregs.models.Permissao;
+import br.ufpr.tcc.gregs.models.Pessoa;
 import br.ufpr.tcc.gregs.models.Retorno;
 import br.ufpr.tcc.gregs.models.Usuario;
 import br.ufpr.tcc.gregs.requests.UsuarioRequest;
 import br.ufpr.tcc.gregs.security.MD5;
 import br.ufpr.tcc.gregs.security.TokenUtil;
 import br.ufpr.tcc.gregs.service.IPermissaoService;
+import br.ufpr.tcc.gregs.service.IPessoaService;
 import br.ufpr.tcc.gregs.service.IUsuarioService;
 
 @RestController
@@ -30,6 +32,9 @@ public class UsuarioResource {
 
 	@Autowired
 	private IPermissaoService iPermissaoService;
+	
+	@Autowired
+	private IPessoaService iPessoaService;
 
 	// TESTA SE USUARIO É ADM
 	@GetMapping("/usuarios/all")
@@ -51,9 +56,15 @@ public class UsuarioResource {
 	public Retorno inserirUsuario(@RequestBody UsuarioRequest request) {
 		Usuario usuario = new Usuario();
 		try {
-			usuario.setNome(request.getNome());
+			Pessoa pessoa = new Pessoa();
+			pessoa.setNome(request.getNome());
+			pessoa.setSobrenome(request.getSobrenome());
+			iPessoaService.inserirPessoa(pessoa);
+			
+			usuario.setPessoa(pessoa);
 			usuario.setEmail(request.getEmail());
 			usuario.setPassword(MD5.toMD5(request.getPassword()));
+			
 			Set<Permissao> permissoes = new HashSet<>();
 			permissoes.add(iPermissaoService.buscarId(request.getPermissaoId()));
 			usuario.setPermissoes(permissoes);

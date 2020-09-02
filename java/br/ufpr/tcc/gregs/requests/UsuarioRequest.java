@@ -5,6 +5,7 @@ public class UsuarioRequest {
 	private long id;
 	private String email;
 	private String nome;
+	private String sobrenome;
 	private String password;
 	private long permissaoId;
 
@@ -46,6 +47,14 @@ public class UsuarioRequest {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getSobrenome() {
+		return sobrenome;
+	}
+
+	public void setSobrenome(String sobrenome) {
+		this.sobrenome = sobrenome;
 	}
 
 }
