@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.ufpr.tcc.gregs.models.Retorno;
 import br.ufpr.tcc.gregs.models.Usuario;
-import br.ufpr.tcc.gregs.requests.LoginRequest;
+import br.ufpr.tcc.gregs.parser.requests.LoginRequest;
 import br.ufpr.tcc.gregs.security.TokenUtil;
 import br.ufpr.tcc.gregs.service.IUsuarioService;
 

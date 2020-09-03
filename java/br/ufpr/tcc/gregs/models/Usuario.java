@@ -24,8 +24,7 @@ public class Usuario {
 		this.permissoes.add(new Permissao(3, "visitante"));
 	}
 
-	public Usuario(long id, String email, String password, Pessoa pessoa, Set<Permissao> permissoes) {
-		this.id = id;
+	public Usuario(String email, String password, Pessoa pessoa, Set<Permissao> permissoes) {
 		this.pessoa = pessoa;
 		this.email = email;
 		this.password = password;
@@ -40,6 +39,10 @@ public class Usuario {
 	@OneToOne
 	@JoinColumn(name = "fk_pessoa_id")
 	private Pessoa pessoa;
+	
+	@OneToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "fk_pagina_id")
+	private Pagina pagina;
 
 	@Column(name = "user_password", nullable = false)
 	private String password;
@@ -47,15 +50,17 @@ public class Usuario {
 	@Column(name = "user_email", nullable = false, unique = true)
 	private String email;
 
-	@ManyToMany(cascade = { CascadeType.ALL })
+	@ManyToMany(cascade = { CascadeType.DETACH })
 	@JoinTable(name = "usuario_permissao", joinColumns = { @JoinColumn(name = "fk_user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "fk_role") })
 	private Set<Permissao> permissoes = new HashSet<>();
 
+
+
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", pessoa=" + pessoa + ", password=" + password + ", email=" + email
-				+ ", permissoes=" + permissoes + "]";
+		return "Usuario [id=" + id + ", pessoa=" + pessoa + ", pagina=" + pagina + ", password=" + password + ", email="
+				+ email + ", permissoes=" + permissoes + "]";
 	}
 
 	@Override
@@ -125,4 +130,14 @@ public class Usuario {
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
+
+	public Pagina getPagina() {
+		return pagina;
+	}
+
+	public void setPagina(Pagina pagina) {
+		this.pagina = pagina;
+	}
+	
+	
 }

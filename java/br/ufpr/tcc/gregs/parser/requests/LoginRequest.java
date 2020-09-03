@@ -1,4 +1,4 @@
-package br.ufpr.tcc.gregs.requests;
+package br.ufpr.tcc.gregs.parser.requests;
 
 import java.security.NoSuchAlgorithmException;
 

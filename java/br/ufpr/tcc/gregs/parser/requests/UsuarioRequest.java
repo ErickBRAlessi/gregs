@@ -1,4 +1,4 @@
-package br.ufpr.tcc.gregs.requests;
+package br.ufpr.tcc.gregs.parser.requests;
 
 public class UsuarioRequest {
 
@@ -7,6 +7,7 @@ public class UsuarioRequest {
 	private String nome;
 	private String sobrenome;
 	private String password;
+	private String url;
 	private long permissaoId;
 
 	public String getEmail() {
@@ -55,6 +56,14 @@ public class UsuarioRequest {
 
 	public void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 }

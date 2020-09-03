@@ -1,5 +1,6 @@
 package br.ufpr.tcc.gregs.resources;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,12 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.ufpr.tcc.gregs.graph.Neo4JSessionFactory;
+import br.ufpr.tcc.gregs.models.Pagina;
 import br.ufpr.tcc.gregs.models.Permissao;
 import br.ufpr.tcc.gregs.models.Pessoa;
 import br.ufpr.tcc.gregs.models.Retorno;
 import br.ufpr.tcc.gregs.models.Usuario;
-import br.ufpr.tcc.gregs.requests.UsuarioRequest;
+import br.ufpr.tcc.gregs.parser.requests.UsuarioRequest;
+import br.ufpr.tcc.gregs.parser.responses.UsuarioResponse;
 import br.ufpr.tcc.gregs.security.MD5;
 import br.ufpr.tcc.gregs.security.TokenUtil;
 import br.ufpr.tcc.gregs.service.IPermissaoService;
@@ -40,14 +42,18 @@ public class UsuarioResource {
 	@GetMapping("/usuarios/all")
 	public Retorno listarUsuarios(@RequestHeader("Token") String token) {
 		if (TokenUtil.isUsuarioAdmin(token)) {
-			List<Usuario> usuarios;
+			List<UsuarioResponse> usuariosResp = new ArrayList<>();
 			try {
+				List<Usuario> usuarios;
 				usuarios = iUsuarioService.findAll();
+				for(Usuario u : usuarios) {
+					usuariosResp.add(new UsuarioResponse(u));
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				return new Retorno(e.getMessage(), e.getClass());
 			}
-			return new Retorno("Sucesso", usuarios);
+			return new Retorno("Sucesso", usuariosResp);
 		}
 		return new Retorno("Usuário sem Autorização ou Expirado", null);
 	}
@@ -65,6 +71,8 @@ public class UsuarioResource {
 			usuario.setEmail(request.getEmail());
 			usuario.setPassword(MD5.toMD5(request.getPassword()));
 			
+			usuario.setPagina(new Pagina(request.getUrl(), null));
+			
 			Set<Permissao> permissoes = new HashSet<>();
 			permissoes.add(iPermissaoService.buscarId(request.getPermissaoId()));
 			usuario.setPermissoes(permissoes);
@@ -73,7 +81,7 @@ public class UsuarioResource {
 			e.printStackTrace();
 			return new Retorno(e.getMessage(), e.getClass());
 		}
-		return new Retorno("Usuario Inserido com Sucesso", usuario);
+		return new Retorno("Usuario Inserido com Sucesso", new UsuarioResponse(usuario));
 	}
 
 	// Deleta pelo email

@@ -1,20 +1,18 @@
 package br.ufpr.tcc.gregs;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.orm.hibernate5.SessionFactoryUtils;
 
-import br.ufpr.tcc.gregs.configurations.SessionFactory;
-import br.ufpr.tcc.gregs.graph.Neo4JSessionFactory;
+import br.ufpr.tcc.gregs.models.Componente;
+import br.ufpr.tcc.gregs.models.ComponenteImagem;
+import br.ufpr.tcc.gregs.models.ComponenteTexto;
+import br.ufpr.tcc.gregs.models.Pagina;
 import br.ufpr.tcc.gregs.models.Permissao;
 import br.ufpr.tcc.gregs.models.Pessoa;
 import br.ufpr.tcc.gregs.models.Usuario;
@@ -22,7 +20,6 @@ import br.ufpr.tcc.gregs.security.MD5;
 import br.ufpr.tcc.gregs.service.IPermissaoService;
 import br.ufpr.tcc.gregs.service.IPessoaService;
 import br.ufpr.tcc.gregs.service.IUsuarioService;
-import br.ufpr.tcc.gregs.service.PessoaService;
 
 @SpringBootApplication
 public class GregsApplication {
@@ -73,15 +70,32 @@ public class GregsApplication {
 			iPessoaService.inserirPessoa(pessoaCli);
 			iPessoaService.inserirPessoa(pessoaVis);
 			
-			Usuario userAdm = new Usuario(1, "adm@adm.com", MD5.toMD5(ADMIN), pessoaAdm, permissoesUserAdm);
-			Usuario userCli = new Usuario(2, "cli@cli.com", MD5.toMD5(ADMIN), pessoaCli, permissoesUserCli);
-			Usuario userVis = new Usuario(3, "vis@vis.com", MD5.toMD5(ADMIN), pessoaVis, permissoesUserVis);
+			Usuario userAdm = new Usuario("adm@adm.com", MD5.toMD5(ADMIN), pessoaAdm, permissoesUserAdm);
+			Usuario userCli = new Usuario("cli@cli.com", MD5.toMD5(ADMIN), pessoaCli, permissoesUserCli);
+			Usuario userVis = new Usuario("vis@vis.com", MD5.toMD5(ADMIN), pessoaVis, permissoesUserVis);
+			
+			
+			userCli.setPagina(new Pagina("validurl", new ArrayList<Componente>()));
+			
+			ComponenteImagem c1 = new ComponenteImagem();
+			ComponenteTexto c2 = new ComponenteTexto();
+			
+			
+			c1.setImagem("img");
+			c1.setPagina(userCli.getPagina());
+			
+			c2.setTexto("texto");
+			c2.setPagina(userCli.getPagina());
+			
+			userCli.getPagina().getComponentes().add(c1);
+			userCli.getPagina().getComponentes().add(c2);			
+			
 			iUsuarioService.inserirUsuario(userAdm);
 			iUsuarioService.inserirUsuario(userCli);
 			iUsuarioService.inserirUsuario(userVis);
 			
-			
-			Usuario u = iUsuarioService.findByEmail("adm@adm.com");
+			//TODO: fixit
+			Usuario u = iUsuarioService.findByEmail("cli@cli.com");
 			System.out.println(u);
 		} catch (Exception e) {
 			e.printStackTrace();
