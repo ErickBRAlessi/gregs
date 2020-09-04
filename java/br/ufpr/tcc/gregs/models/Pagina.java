@@ -13,12 +13,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "pagina")
 public class Pagina {
 
-
-	public Pagina() {}
+	public Pagina() {
+	}
 
 	public Pagina(String url, List<Componente> componentes) {
 		this.url = url;
@@ -29,12 +31,19 @@ public class Pagina {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "pk_pagina_id", nullable = false)
 	private long id;
-	
+
 	@Column(name = "url", nullable = false, unique = true)
 	private String url;
-	
-	@OneToMany(mappedBy = "pagina", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+
+	// @JsonIgnore
+	// @OneToMany(mappedBy = "pagina", fetch = FetchType.EAGER, cascade =
+	// CascadeType.ALL, orphanRemoval = true)
+
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<Componente> componentes;
+
+	@Column(name = "background_color")
+	private String backgroundColor;
 
 	@Override
 	public String toString() {
@@ -63,6 +72,14 @@ public class Pagina {
 
 	public void setComponentes(List<Componente> componentes) {
 		this.componentes = componentes;
+	}
+
+	public String getBackgroundColor() {
+		return backgroundColor;
+	}
+
+	public void setBackgroundColor(String backgroundColor) {
+		this.backgroundColor = backgroundColor;
 	}
 
 }

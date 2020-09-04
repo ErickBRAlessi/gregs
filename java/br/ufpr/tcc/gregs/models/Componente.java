@@ -17,8 +17,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "tipo")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = ComponenteImagem.class, name = "ComponentesImagem"),
-        @JsonSubTypes.Type(value = ComponenteTexto.class, name = "ComponentesTexto")})
+        @JsonSubTypes.Type(value = ComponenteImagem.class, name = "ComponenteImagem"),
+        @JsonSubTypes.Type(value = ComponenteFlickr.class, name = "ComponenteFlickr"),
+        @JsonSubTypes.Type(value = ComponenteTexto.class, name = "ComponenteTexto")})
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Componente {
@@ -29,10 +30,24 @@ public abstract class Componente {
 	@Column(name = "pk_componente_id", nullable = false)
 	private long id;
 
+	/*
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="fk_pagina_id")
 	private Pagina pagina;
+	 */
+	
+	@Column(name = "titulo")
+	private String titulo;
+	
+	@Column(name = "mostrar_titulo")
+	private boolean mostrarTitulo;
+
+	@Column(name = "background_color")
+	private String backgroundColor;
+	
+	@Column(name = "foreground_color")
+	private String foregroundColor;
 
 	public long getId() {
 		return id;
@@ -42,12 +57,39 @@ public abstract class Componente {
 		this.id = id;
 	}
 	
-	public Pagina getPagina() {
-		return pagina;
+
+	public String getTitulo() {
+		return titulo;
 	}
 
-	public void setPagina(Pagina pagina) {
-		this.pagina = pagina;
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
+	public String getBackgroundColor() {
+		return backgroundColor;
+	}
+
+	public void setBackgroundColor(String backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}
+
+	public String getForegroundColor() {
+		return foregroundColor;
+	}
+
+	public void setForegroundColor(String foregroundColor) {
+		this.foregroundColor = foregroundColor;
+	}
+
+	public boolean isMostrarTitulo() {
+		return mostrarTitulo;
+	}
+
+	public void setMostrarTitulo(boolean mostrarTitulo) {
+		this.mostrarTitulo = mostrarTitulo;
+	}
+
+	
+	
 }

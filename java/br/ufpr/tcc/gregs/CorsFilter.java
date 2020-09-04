@@ -58,7 +58,6 @@ public class CorsFilter implements Filter {
 
 	@Override
 	public boolean include(Object element) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

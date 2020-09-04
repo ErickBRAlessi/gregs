@@ -2,16 +2,22 @@ package br.ufpr.tcc.gregs;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 
 import br.ufpr.tcc.gregs.models.Componente;
+import br.ufpr.tcc.gregs.models.ComponenteFlickr;
 import br.ufpr.tcc.gregs.models.ComponenteImagem;
 import br.ufpr.tcc.gregs.models.ComponenteTexto;
+import br.ufpr.tcc.gregs.models.Imagem;
 import br.ufpr.tcc.gregs.models.Pagina;
 import br.ufpr.tcc.gregs.models.Permissao;
 import br.ufpr.tcc.gregs.models.Pessoa;
@@ -40,6 +46,7 @@ public class GregsApplication {
 	}
 
 	@Bean
+	@Transactional
 	void dataBaseFirstLoad() {
 		// Carga na base
 		try {
@@ -79,22 +86,31 @@ public class GregsApplication {
 			
 			ComponenteImagem c1 = new ComponenteImagem();
 			ComponenteTexto c2 = new ComponenteTexto();
+			ComponenteFlickr c3 = new ComponenteFlickr();
+
 			
 			
-			c1.setImagem("img");
-			c1.setPagina(userCli.getPagina());
+			c1.setImagem(new Imagem());
 			
 			c2.setTexto("texto");
-			c2.setPagina(userCli.getPagina());
+			
+			c3.setBackgroundColor("#FFFFFF");
+			c3.setForegroundColor("#F4F4F4");
+			List<Imagem> imgs = new ArrayList<>();
+			imgs.add(new Imagem());
+			imgs.add(new Imagem());
+			c3.setImagens(imgs);
+			
 			
 			userCli.getPagina().getComponentes().add(c1);
-			userCli.getPagina().getComponentes().add(c2);			
+			userCli.getPagina().getComponentes().add(c2);		
+			userCli.getPagina().getComponentes().add(c3);
+			
 			
 			iUsuarioService.inserirUsuario(userAdm);
 			iUsuarioService.inserirUsuario(userCli);
 			iUsuarioService.inserirUsuario(userVis);
 			
-			//TODO: fixit
 			Usuario u = iUsuarioService.findByEmail("cli@cli.com");
 			System.out.println(u);
 		} catch (Exception e) {

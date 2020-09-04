@@ -16,6 +16,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "usuario")
 public class Usuario {
@@ -36,10 +38,12 @@ public class Usuario {
 	@Column(name = "pk_user_id", nullable = false)
 	private long id;
 
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "fk_pessoa_id")
 	private Pessoa pessoa;
 	
+	@JsonIgnore
 	@OneToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "fk_pagina_id")
 	private Pagina pagina;
@@ -54,8 +58,6 @@ public class Usuario {
 	@JoinTable(name = "usuario_permissao", joinColumns = { @JoinColumn(name = "fk_user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "fk_role") })
 	private Set<Permissao> permissoes = new HashSet<>();
-
-
 
 	@Override
 	public String toString() {

@@ -35,8 +35,6 @@ public class TagsResource {
 				}
 			})
 			);
-//			Neo4JSessionFactory.printGreeting("BOLINHA");
-//			tags.forEach(t -> System.out.println(t));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

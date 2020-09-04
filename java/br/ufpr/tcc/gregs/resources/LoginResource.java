@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.ufpr.tcc.gregs.models.Retorno;
 import br.ufpr.tcc.gregs.models.Usuario;
 import br.ufpr.tcc.gregs.parser.requests.LoginRequest;
+import br.ufpr.tcc.gregs.parser.responses.UsuarioResponse;
 import br.ufpr.tcc.gregs.security.TokenUtil;
 import br.ufpr.tcc.gregs.service.IUsuarioService;
 
@@ -40,7 +41,9 @@ public class LoginResource {
 		try {
 			Usuario user = TokenUtil.getUsuarioLogado(token);
 			if (user != null) {
-				return new Retorno("Usuario logado", TokenUtil.getUsuarioLogado(token));
+				//atualizar usuario
+				user = iUsuarioService.findUsuario(user.getId());
+				return new Retorno("Usuario logado", new UsuarioResponse(user));
 			}
 			return new Retorno("Usuario desconhecido ou não logado", null);
 		} catch (Exception e) {
