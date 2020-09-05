@@ -22,7 +22,7 @@ public class LoginResource {
 
 	@PostMapping("/login")
 	public Retorno inserirUsuario(@RequestBody LoginRequest request) {
-		Usuario user = iUsuarioService.findUsuario(request.getEmail().trim().toLowerCase());
+		Usuario user = iUsuarioService.findByEmail(request.getEmail().trim().toLowerCase());
 		// MD5 feito na classe LoginRequest no set
 		if (user == null) {
 			return new Retorno("Usuario Inválido", null);

@@ -25,7 +25,7 @@ public class ComponenteService implements IComponenteService {
 	}
 
 	@Override
-	public void inserirComponente(Componente componente) {
+	public void salvarComponente(Componente componente) {
 		repository.save(componente);
 	}
 

@@ -11,6 +11,8 @@ import br.ufpr.tcc.gregs.models.Pessoa;
 import br.ufpr.tcc.gregs.models.Usuario;
 
 public class UsuarioResponse {
+	
+	private Long id;
 
 	private String email;
 
@@ -89,8 +91,9 @@ public class UsuarioResponse {
 		}
 		
 	}
-
+	
 	public UsuarioResponse(Usuario user) {
+		this.id = user.getId();
 		if (user.getEmail() != null) {
 			this.email = user.getEmail();
 		}
@@ -103,6 +106,14 @@ public class UsuarioResponse {
 		if (user.getPagina() != null) {
 			this.setPagina(new InnerPagina(user.getPagina()));
 		}
+	}
+
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getEmail() {
@@ -136,5 +147,6 @@ public class UsuarioResponse {
 	public void setPagina(InnerPagina pagina) {
 		this.pagina = pagina;
 	}
+
 
 }

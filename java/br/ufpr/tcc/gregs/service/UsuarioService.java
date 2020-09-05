@@ -23,7 +23,7 @@ public class UsuarioService implements IUsuarioService {
 	}
 
 	@Override
-	public void inserirUsuario(Usuario usuario) {
+	public void salvarUsuario(Usuario usuario) {
 		repository.save(usuario);
 	}
 
@@ -36,18 +36,6 @@ public class UsuarioService implements IUsuarioService {
 		return null;
 	}
 
-	
-	@Override
-	public Usuario findUsuario(String email) {
-		// TODO FIX THIS
-		List<Usuario> usuarios = (List<Usuario>) repository.findAll();
-		for (Usuario user : usuarios) {
-			if (user.getEmail().equalsIgnoreCase(email)) {
-				return user;
-			}
-		}
-		return null;
-	}
 
 	@Override
 	public void deletarUsuario(Usuario usuario) {

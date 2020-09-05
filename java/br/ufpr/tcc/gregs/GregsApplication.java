@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Service;
 
 import br.ufpr.tcc.gregs.models.Componente;
 import br.ufpr.tcc.gregs.models.ComponenteFlickr;
@@ -21,6 +20,7 @@ import br.ufpr.tcc.gregs.models.Imagem;
 import br.ufpr.tcc.gregs.models.Pagina;
 import br.ufpr.tcc.gregs.models.Permissao;
 import br.ufpr.tcc.gregs.models.Pessoa;
+import br.ufpr.tcc.gregs.models.Texto;
 import br.ufpr.tcc.gregs.models.Usuario;
 import br.ufpr.tcc.gregs.security.MD5;
 import br.ufpr.tcc.gregs.service.IPermissaoService;
@@ -92,7 +92,13 @@ public class GregsApplication {
 			
 			c1.setImagem(new Imagem());
 			
-			c2.setTexto("texto");
+			ArrayList<Texto> textos = new ArrayList<>();
+			textos.add(new Texto("titulo 1","eu sou um texto veridico 1"));
+			textos.add(new Texto("titulo 2", "eu sou o segundo texto"));
+			textos.add(new Texto("titulo 3", "me come"));
+			
+			
+			c2.setTextos(textos);
 			
 			c3.setBackgroundColor("#FFFFFF");
 			c3.setForegroundColor("#F4F4F4");
@@ -107,9 +113,9 @@ public class GregsApplication {
 			userCli.getPagina().getComponentes().add(c3);
 			
 			
-			iUsuarioService.inserirUsuario(userAdm);
-			iUsuarioService.inserirUsuario(userCli);
-			iUsuarioService.inserirUsuario(userVis);
+			iUsuarioService.salvarUsuario(userAdm);
+			iUsuarioService.salvarUsuario(userCli);
+			iUsuarioService.salvarUsuario(userVis);
 			
 			Usuario u = iUsuarioService.findByEmail("cli@cli.com");
 			System.out.println(u);

@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -34,19 +37,19 @@ public class UsuarioResource {
 
 	@Autowired
 	private IPermissaoService iPermissaoService;
-	
+
 	@Autowired
 	private IPessoaService iPessoaService;
 
 	// TESTA SE USUARIO É ADM
-	@GetMapping("/usuarios/all")
+	@GetMapping("/usuarios/")
 	public Retorno listarUsuarios(@RequestHeader("Token") String token) {
 		if (TokenUtil.isUsuarioAdmin(token)) {
 			List<UsuarioResponse> usuariosResp = new ArrayList<>();
 			try {
 				List<Usuario> usuarios;
 				usuarios = iUsuarioService.findAll();
-				for(Usuario u : usuarios) {
+				for (Usuario u : usuarios) {
 					usuariosResp.add(new UsuarioResponse(u));
 				}
 			} catch (Exception e) {
@@ -59,29 +62,49 @@ public class UsuarioResource {
 	}
 
 	@PutMapping("/usuario")
-	public Retorno inserirUsuario(@RequestBody UsuarioRequest request) {
+	public ResponseEntity<Retorno> inserirUsuario(@RequestBody UsuarioRequest request) {
 		Usuario usuario = new Usuario();
 		try {
 			Pessoa pessoa = new Pessoa();
 			pessoa.setNome(request.getNome());
 			pessoa.setSobrenome(request.getSobrenome());
 			iPessoaService.inserirPessoa(pessoa);
-			
+
 			usuario.setPessoa(pessoa);
 			usuario.setEmail(request.getEmail());
 			usuario.setPassword(MD5.toMD5(request.getPassword()));
-			
+
 			usuario.setPagina(new Pagina(request.getUrl(), null));
-			
+
 			Set<Permissao> permissoes = new HashSet<>();
 			permissoes.add(iPermissaoService.buscarId(request.getPermissaoId()));
 			usuario.setPermissoes(permissoes);
-			iUsuarioService.inserirUsuario(usuario);
+			iUsuarioService.salvarUsuario(usuario);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new Retorno(e.getMessage(), e.getClass()), HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>(new Retorno("Usuario Inserido com Sucesso", new UsuarioResponse(usuario)), HttpStatus.CREATED);
+	}
+
+	@PutMapping(value = "/usuario/{id}")
+	public Retorno updateUsuario(@PathVariable("id") long id, @RequestBody UsuarioRequest request) {
+		Usuario usuario = null;
+		try {
+			usuario = iUsuarioService.findUsuario(id);
+			if (usuario != null) {
+				usuario.setEmail(request.getEmail());
+				usuario.setPassword(MD5.toMD5(request.getPassword()));
+				usuario.getPagina().setUrl(request.getUrl());
+				iUsuarioService.salvarUsuario(usuario);
+			} else {
+				return new Retorno("Usuario não Encontrado", null);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new Retorno(e.getMessage(), e.getClass());
 		}
-		return new Retorno("Usuario Inserido com Sucesso", new UsuarioResponse(usuario));
+		return new Retorno("Usuario atualizado com Sucesso!", new UsuarioResponse(usuario));
 	}
 
 	// Deleta pelo email
@@ -89,7 +112,7 @@ public class UsuarioResource {
 	public Retorno deletarUsuario(@RequestHeader("Token") String token, @RequestBody UsuarioRequest request) {
 		if (TokenUtil.isUsuarioAdmin(token)) {
 			try {
-				Usuario usuario = iUsuarioService.findUsuario(request.getEmail());
+				Usuario usuario = iUsuarioService.findByEmail(request.getEmail());
 				iUsuarioService.deletarUsuario(usuario);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -98,6 +121,21 @@ public class UsuarioResource {
 			return new Retorno("Usuario Deletado com Sucesso", request);
 		}
 		return new Retorno("Usuário sem Autorização", null);
+	}
+
+	@GetMapping("/usuario/{email}")
+	public Retorno getUsuario(@PathVariable String email) {
+		Usuario usuario;
+		try {
+			usuario = iUsuarioService.findByEmail(email);
+			if (usuario == null) {
+				return new Retorno("Usuario não Encontrado", null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Retorno(e.getMessage(), e.getClass());
+		}
+		return new Retorno("Sucesso!", new UsuarioResponse(usuario));
 	}
 
 }
