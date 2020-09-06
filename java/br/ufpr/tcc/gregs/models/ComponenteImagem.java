@@ -6,18 +6,24 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonAlias;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "id")
 public class ComponenteImagem extends Componente {
 
-	@JsonIgnore
+	@JsonAlias("tipo")
+	private static final String TIPO = "ComponenteImagem";
+
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private Imagem imagem;
 
 	@Column(name = "descricao")
 	private String descricao;
+
+	public String getTipo() {
+		return TIPO;
+	}
 
 	public Imagem getImagem() {
 		return imagem;

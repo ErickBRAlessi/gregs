@@ -12,11 +12,16 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "id")
 public class ComponenteFlickr extends Componente {
+
+	@JsonAlias("tipo")
+	private static final String TIPO = "ComponenteFlickr";
 
 	@Column(name = "usuario")
 	private String username;
@@ -39,6 +44,10 @@ public class ComponenteFlickr extends Componente {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SUBSELECT)
 	private List<Imagem> imagens;
+
+	public String getTipo() {
+		return TIPO;
+	}
 
 	public String getUsername() {
 		return username;
