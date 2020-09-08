@@ -41,50 +41,57 @@ public class ComponenteResource {
 		try {
 			componente = iComponenteService.findComponente(id);
 			if (componente == null) {
-				return  new ResponseEntity<>(new Retorno("Componente não encontrado", null),HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<>(new Retorno("Componente não encontrado", null), HttpStatus.BAD_REQUEST);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<>(new Retorno(e.getMessage(), e.getClass()),HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new Retorno(e.getMessage(), e.getClass()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(new Retorno("Sucesso", componente),HttpStatus.OK);
+		return new ResponseEntity<>(new Retorno("Sucesso", componente), HttpStatus.OK);
 	}
-	
+
 	@PutMapping("/componente/")
-	public ResponseEntity<Retorno> inserirComponente(@RequestBody ComponenteRequest componenteRequest){
-		if(componenteRequest instanceof ComponenteTextoRequest) {
-			Componente componente = new ComponenteTexto((ComponenteTextoRequest) componenteRequest);	
+	public ResponseEntity<Retorno> inserirComponente(@RequestBody ComponenteRequest componenteRequest) {
+		Componente componente = null;
+		if (componenteRequest instanceof ComponenteTextoRequest) {
+			componente = new ComponenteTexto((ComponenteTextoRequest) componenteRequest);
+		}
+		// adicionar cast e teste para cada tipo de componente
+		if (componente != null) {
 			iComponenteService.salvarComponente(componente);
 			componente = iComponenteService.findComponente(componente.getId());
-			return new ResponseEntity<>(new Retorno("Sucesso", componente),HttpStatus.CREATED);
+			return new ResponseEntity<>(new Retorno("Sucesso", componente), HttpStatus.OK);
 		}
-		
-		return new ResponseEntity<>(new Retorno("Request Não Reconhecido", null),HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(new Retorno("Request Não Reconhecido", null), HttpStatus.BAD_REQUEST);
 	}
-	
+
 	@PutMapping("/componente/{id}")
-	public ResponseEntity<Retorno> atualizarComponente(@PathVariable("id") Long id, @RequestBody ComponenteRequest componenteRequest){
-		if(componenteRequest instanceof ComponenteTextoRequest) {
+	public ResponseEntity<Retorno> atualizarComponente(@PathVariable("id") Long id,
+			@RequestBody ComponenteRequest componenteRequest) {
+		Componente componente = iComponenteService.findComponente(id);
+		if (componente != null) {
 			componenteRequest.setId(id);
-			Componente componente = new ComponenteTexto((ComponenteTextoRequest) componenteRequest);	
+			if (componenteRequest instanceof ComponenteTextoRequest) {
+				componente = new ComponenteTexto((ComponenteTextoRequest) componenteRequest);
+			}
 			iComponenteService.salvarComponente(componente);
 			componente = iComponenteService.findComponente(componente.getId());
-			return new ResponseEntity<>(new Retorno("Sucesso", componente),HttpStatus.OK);
+			return new ResponseEntity<>(new Retorno("Sucesso", componente), HttpStatus.OK);
 		}
-		
-		return new ResponseEntity<>(new Retorno("Request Não Reconhecido", null),HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(new Retorno("Request Não Reconhecido ou Id não Encontrado", null),
+				HttpStatus.NOT_FOUND);
 	}
-	
+
 	@DeleteMapping("/componente/{id}")
-	public ResponseEntity<Retorno> deletarComponente(@PathVariable("id") Long id){
+	public ResponseEntity<Retorno> deletarComponente(@PathVariable("id") Long id) {
 		try {
 			Componente componente = iComponenteService.findComponente(id);
 			iComponenteService.deletarComponente(componente);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<>(new Retorno(e.getMessage(), e.getClass()),HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new Retorno(e.getMessage(), e.getClass()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(new Retorno("Componente Deletado Com Sucesso",null),HttpStatus.OK);
+		return new ResponseEntity<>(new Retorno("Componente Deletado Com Sucesso", null), HttpStatus.OK);
 	}
 
 }
