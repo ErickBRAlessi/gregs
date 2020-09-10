@@ -16,21 +16,9 @@ import br.ufpr.tcc.gregs.models.Retorno;
 import br.ufpr.tcc.gregs.parser.requests.ComponenteRequest;
 import br.ufpr.tcc.gregs.parser.requests.ComponenteTextoRequest;
 import br.ufpr.tcc.gregs.service.IComponenteService;
-import br.ufpr.tcc.gregs.service.IPermissaoService;
-import br.ufpr.tcc.gregs.service.IPessoaService;
-import br.ufpr.tcc.gregs.service.IUsuarioService;
 
 @RestController
 public class ComponenteResource {
-
-	@Autowired
-	private IUsuarioService iUsuarioService;
-
-	@Autowired
-	private IPermissaoService iPermissaoService;
-
-	@Autowired
-	private IPessoaService iPessoaService;
 
 	@Autowired
 	private IComponenteService iComponenteService;
@@ -74,6 +62,7 @@ public class ComponenteResource {
 			if (componenteRequest instanceof ComponenteTextoRequest) {
 				componente = new ComponenteTexto((ComponenteTextoRequest) componenteRequest);
 			}
+			//adicionar cast e teste aqui
 			iComponenteService.salvarComponente(componente);
 			componente = iComponenteService.findComponente(componente.getId());
 			return new ResponseEntity<>(new Retorno("Sucesso", componente), HttpStatus.OK);

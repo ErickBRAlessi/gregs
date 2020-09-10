@@ -1,77 +1,38 @@
 package br.ufpr.tcc.gregs.models;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
+import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @Table(name = "permissao")
-public class Permissao {
+public class Permissao implements GrantedAuthority{
 
-	public Permissao() {
-	}
-
-	public Permissao(long id, String descricao) {
-		this.id = id;
-		this.descricao = descricao;
+	private static final long serialVersionUID = -1838859751890045635L;
+	
+	public Permissao(String name) {
+		this.name = name.trim().toUpperCase();
 	}
 
 	@Id
+	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "pk_role")
-	private long id;
+	private String id;
 
-	@Column(name = "role_descricao")
-	private String descricao;
-
-	
-	@ManyToMany(mappedBy = "permissoes")
-	private Set<Usuario> usuarios = new HashSet<>();
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
+	/**
+	 * unique and transformed to GrantedAuthority,can be used in Spring expression
+	 * hasRole, etc
+	 **/
+	@Column(nullable = false, unique = true)
+	private String name;
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
-		return result;
+	public String getAuthority() {
+		return name;
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Permissao other = (Permissao) obj;
-		return (id == other.id);
-	}
-
 }

@@ -1,8 +1,11 @@
 package br.ufpr.tcc.gregs.parser.responses;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+
+import org.springframework.security.core.GrantedAuthority;
 
 import br.ufpr.tcc.gregs.models.Componente;
 import br.ufpr.tcc.gregs.models.Pagina;
@@ -132,6 +135,14 @@ public class UsuarioResponse {
 		this.pessoa = pessoa;
 	}
 
+	public InnerPagina getPagina() {
+		return pagina;
+	}
+
+	public void setPagina(InnerPagina pagina) {
+		this.pagina = pagina;
+	}
+
 	public Set<Permissao> getPermissoes() {
 		return permissoes;
 	}
@@ -140,13 +151,8 @@ public class UsuarioResponse {
 		this.permissoes = permissoes;
 	}
 
-	public InnerPagina getPagina() {
-		return pagina;
-	}
-
-	public void setPagina(InnerPagina pagina) {
-		this.pagina = pagina;
-	}
+	
+	
 
 
 }

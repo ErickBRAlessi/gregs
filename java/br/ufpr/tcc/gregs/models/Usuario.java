@@ -1,36 +1,42 @@
 package br.ufpr.tcc.gregs.models;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "usuario")
-public class Usuario {
+public class Usuario implements UserDetails {
+
+	private static final long serialVersionUID = -6903393419411737049L;
 
 	public Usuario() {
-		this.permissoes.add(new Permissao(3, "visitante"));
 	}
 
-	public Usuario(String email, String password, Pessoa pessoa, Set<Permissao> permissoes) {
+	public Usuario(String email, String password, Pessoa pessoa, Permissao permissao) {
 		this.pessoa = pessoa;
 		this.email = email;
 		this.password = password;
-		this.permissoes = permissoes;
+		Set<Permissao> p = new HashSet<>();
+		p.add(new Permissao("permissao_bolada_do_millenium"));
+		this.permissoes = p;
 	}
 
 	@Id
@@ -39,10 +45,10 @@ public class Usuario {
 	private long id;
 
 	@JsonIgnore
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "fk_pessoa_id")
 	private Pessoa pessoa;
-	
+
 	@JsonIgnore
 	@OneToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "fk_pagina_id")
@@ -54,10 +60,9 @@ public class Usuario {
 	@Column(name = "user_email", nullable = false, unique = true)
 	private String email;
 
-	@ManyToMany(cascade = { CascadeType.DETACH })
-	@JoinTable(name = "usuario_permissao", joinColumns = { @JoinColumn(name = "fk_user_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "fk_role") })
-	private Set<Permissao> permissoes = new HashSet<>();
+	@Column
+	@OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.EAGER)
+	private Set<Permissao> permissoes;
 
 	@Override
 	public String toString() {
@@ -101,22 +106,6 @@ public class Usuario {
 		this.password = password;
 	}
 
-	public Set<Permissao> getPermissoes() {
-		return permissoes;
-	}
-
-	public void setPermissoes(Set<Permissao> permissoes) {
-		if (permissoes != null) {
-			this.permissoes = permissoes;
-		}
-	}
-
-	public void removerTodasPermissoes() {
-		for (Permissao p : permissoes) {
-			permissoes.remove(p);
-		}
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -140,6 +129,45 @@ public class Usuario {
 	public void setPagina(Pagina pagina) {
 		this.pagina = pagina;
 	}
-	
-	
+
+	// ---SECURITY---//
+
+	public Set<Permissao> getPermissoes() {
+		return permissoes;
+	}
+
+	public void setPermissoes(Set<Permissao> permissoes) {
+		this.permissoes = permissoes;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return permissoes;
+	}
+
+	@Override
+	public String getUsername() {
+		return email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+
 }
