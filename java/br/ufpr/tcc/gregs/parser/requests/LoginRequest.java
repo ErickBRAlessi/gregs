@@ -1,9 +1,5 @@
 package br.ufpr.tcc.gregs.parser.requests;
 
-import java.security.NoSuchAlgorithmException;
-
-import br.ufpr.tcc.gregs.security.MD5;
-
 public class LoginRequest {
 	
 	private String email;
