@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -23,14 +22,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Usuario {
 
 	public Usuario() {
-		this.permissoes.add(new Permissao(3, "visitante"));
 	}
 
-	public Usuario(String email, String password, Pessoa pessoa, Set<Permissao> permissoes) {
+	public Usuario(String email, String password, Pessoa pessoa) {
 		this.pessoa = pessoa;
 		this.email = email;
 		this.password = password;
-		this.permissoes = permissoes;
+//		this.username = email;
 	}
 
 	@Id
@@ -39,30 +37,29 @@ public class Usuario {
 	private long id;
 
 	@JsonIgnore
-	@OneToOne
+	@OneToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "fk_pessoa_id")
 	private Pessoa pessoa;
-	
+
 	@JsonIgnore
 	@OneToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "fk_pagina_id")
 	private Pagina pagina;
 
-	@Column(name = "user_password", nullable = false)
+	@Column(name = "password", nullable = false)
 	private String password;
 
-	@Column(name = "user_email", nullable = false, unique = true)
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 
-	@ManyToMany(cascade = { CascadeType.DETACH })
-	@JoinTable(name = "usuario_permissao", joinColumns = { @JoinColumn(name = "fk_user_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "fk_role") })
-	private Set<Permissao> permissoes = new HashSet<>();
+	// para o oauth funcionar
+//	@Column(name = "username", nullable = false, unique = true)
+//	private String username;
 
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", pessoa=" + pessoa + ", pagina=" + pagina + ", password=" + password + ", email="
-				+ email + ", permissoes=" + permissoes + "]";
+				+ email + "]";
 	}
 
 	@Override
@@ -101,22 +98,6 @@ public class Usuario {
 		this.password = password;
 	}
 
-	public Set<Permissao> getPermissoes() {
-		return permissoes;
-	}
-
-	public void setPermissoes(Set<Permissao> permissoes) {
-		if (permissoes != null) {
-			this.permissoes = permissoes;
-		}
-	}
-
-	public void removerTodasPermissoes() {
-		for (Permissao p : permissoes) {
-			permissoes.remove(p);
-		}
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -140,6 +121,5 @@ public class Usuario {
 	public void setPagina(Pagina pagina) {
 		this.pagina = pagina;
 	}
-	
-	
+
 }

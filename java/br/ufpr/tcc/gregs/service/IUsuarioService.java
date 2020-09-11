@@ -9,11 +9,11 @@ public interface IUsuarioService {
 	
 	public List<Usuario> findAll();
 	
-	public Usuario findUsuario(Long id);
+	public Usuario find(Long id);
 		
-	public void salvarUsuario(Usuario usuario);
+	public void salvar(Usuario usuario);
 	
-	public void deletarUsuario(Usuario usuario);
+	public void deletar(Usuario usuario);
 
 	void deletarUsuario(long id);
 	

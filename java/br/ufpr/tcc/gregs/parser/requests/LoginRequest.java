@@ -22,8 +22,8 @@ public class LoginRequest {
 		return password;
 	}
 
-	public void setPassword(String password) throws NoSuchAlgorithmException {
-		this.password = MD5.toMD5(password);
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 

@@ -24,10 +24,10 @@ public class Texto {
 	@Column(name = "pk_texto_id", nullable = false)
 	private long id;
 
-	@Column(name = "titulo")
+	@Column(name = "texto_titulo")
 	private String titulo;
 
-	@Column(name = "descricao", length = 1024)
+	@Column(name = "texto_descricao", length = 1024)
 	private String descricao;
 
 	public long getId() {

@@ -2,11 +2,9 @@ package br.ufpr.tcc.gregs.parser.responses;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import br.ufpr.tcc.gregs.models.Componente;
 import br.ufpr.tcc.gregs.models.Pagina;
-import br.ufpr.tcc.gregs.models.Permissao;
 import br.ufpr.tcc.gregs.models.Pessoa;
 import br.ufpr.tcc.gregs.models.Usuario;
 
@@ -17,8 +15,6 @@ public class UsuarioResponse {
 	private String email;
 
 	private Pessoa pessoa;
-
-	private Set<Permissao> permissoes;
 
 	private InnerPagina pagina;
 
@@ -100,9 +96,6 @@ public class UsuarioResponse {
 		if (user.getPessoa() != null) {
 			this.pessoa = user.getPessoa();
 		}
-		if (user.getPermissoes() != null) {
-			this.permissoes = user.getPermissoes();
-		}
 		if (user.getPagina() != null) {
 			this.setPagina(new InnerPagina(user.getPagina()));
 		}
@@ -132,13 +125,6 @@ public class UsuarioResponse {
 		this.pessoa = pessoa;
 	}
 
-	public Set<Permissao> getPermissoes() {
-		return permissoes;
-	}
-
-	public void setPermissoes(Set<Permissao> permissoes) {
-		this.permissoes = permissoes;
-	}
 
 	public InnerPagina getPagina() {
 		return pagina;
