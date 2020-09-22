@@ -1,8 +1,5 @@
 package br.ufpr.tcc.gregs.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,24 +29,6 @@ public class UsuarioResource {
 
 	@Autowired
 	private IPessoaService iPessoaService;
-
-	// TESTA SE USUARIO É ADM
-	@GetMapping("/usuarios/")
-	public Retorno listarUsuarios(@RequestHeader("Token") String token) {
-		List<UsuarioResponse> usuariosResp = new ArrayList<>();
-		try {
-			List<Usuario> usuarios;
-			usuarios = iUsuarioService.findAll();
-			for (Usuario u : usuarios) {
-				usuariosResp.add(new UsuarioResponse(u));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new Retorno(e.getMessage(), e.getClass());
-		}
-		return new Retorno("Sucesso", usuariosResp);
-
-	}
 
 	@PutMapping("/usuario")
 	public ResponseEntity<Retorno> inserirUsuario(@RequestBody UsuarioRequest request) {
@@ -82,7 +61,7 @@ public class UsuarioResource {
 			usuario = iUsuarioService.find(id);
 			if (usuario != null) {
 				usuario.setEmail(request.getEmail());
-				usuario.setPassword(MD5.toMD5(request.getPassword()));
+				usuario.setPassword(request.getPassword());
 				usuario.getPagina().setUrl(request.getUrl());
 				iUsuarioService.salvar(usuario);
 			} else {

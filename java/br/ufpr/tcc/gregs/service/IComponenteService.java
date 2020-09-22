@@ -7,13 +7,11 @@ import br.ufpr.tcc.gregs.models.Usuario;
 
 
 public interface IComponenteService {
-	
-	
+		
 	public Componente findComponente(Long id);
 		
 	public void salvarComponente(Componente componente);
 	
 	public void deletarComponente(Componente componente);
 	
-
 }

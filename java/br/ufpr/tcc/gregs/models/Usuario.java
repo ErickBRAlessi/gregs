@@ -28,7 +28,6 @@ public class Usuario {
 		this.pessoa = pessoa;
 		this.email = email;
 		this.password = password;
-//		this.username = email;
 	}
 
 	@Id
@@ -49,12 +48,10 @@ public class Usuario {
 	@Column(name = "password", nullable = false)
 	private String password;
 
+	//tratado como username pelo Spring.security
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 
-	// para o oauth funcionar
-//	@Column(name = "username", nullable = false, unique = true)
-//	private String username;
 
 	@Override
 	public String toString() {

@@ -7,6 +7,7 @@ import br.ufpr.tcc.gregs.models.Componente;
 import br.ufpr.tcc.gregs.models.Pagina;
 import br.ufpr.tcc.gregs.models.Pessoa;
 import br.ufpr.tcc.gregs.models.Usuario;
+import br.ufpr.tcc.gregs.parser.ParsedComponente;
 
 public class UsuarioResponse {
 	
@@ -18,38 +19,10 @@ public class UsuarioResponse {
 
 	private InnerPagina pagina;
 
-	private class InnerComponente {
-		private long id;
-		private String tipo;
-
-		public InnerComponente(Componente componente) {
-			this.id = componente.getId();
-			this.tipo = componente.getClass().getSimpleName();
-		}
-
-		public long getId() {
-			return id;
-		}
-
-		public void setId(long id) {
-			this.id = id;
-		}
-
-		public String getTipo() {
-			return tipo;
-		}
-
-		public void setTipo(String tipo) {
-			this.tipo = tipo;
-		}
-		
-		
-	}
-
 	private class InnerPagina {
 		private long id;
 		private String url;
-		private List<InnerComponente> componentes;
+		private List<ParsedComponente> componentes;
 
 		public InnerPagina(Pagina pagina) {
 			this.id = pagina.getId();
@@ -57,7 +30,7 @@ public class UsuarioResponse {
 			if (pagina.getComponentes() != null) {
 				this.componentes = new ArrayList<>();
 				for (Componente c : pagina.getComponentes()) {
-					this.componentes.add(new InnerComponente(c));
+					this.componentes.add(new ParsedComponente(c));
 				}
 			}
 		}
@@ -78,11 +51,11 @@ public class UsuarioResponse {
 			this.url = urlPagina;
 		}
 
-		public List<InnerComponente> getComponentes() {
+		public List<ParsedComponente> getComponentes() {
 			return componentes;
 		}
 
-		public void setComponentes(List<InnerComponente> componentes) {
+		public void setComponentes(List<ParsedComponente> componentes) {
 			this.componentes = componentes;
 		}
 		
