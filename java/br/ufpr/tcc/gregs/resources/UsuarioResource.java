@@ -3,9 +3,11 @@ package br.ufpr.tcc.gregs.resources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -41,7 +43,7 @@ public class UsuarioResource {
 
 			usuario.setPessoa(pessoa);
 			usuario.setEmail(request.getEmail());
-			usuario.setPassword(MD5.toMD5(request.getPassword()));
+			usuario.setPassword((request.getPassword()));
 
 			usuario.setPagina(new Pagina(request.getUrl(), null));
 
@@ -54,11 +56,11 @@ public class UsuarioResource {
 				HttpStatus.CREATED);
 	}
 
-	@PutMapping(value = "/usuario/{id}")
-	public Retorno updateUsuario(@PathVariable("id") long id, @RequestBody UsuarioRequest request) {
+	@PostMapping(value = "/usuario/")
+	public Retorno updateUsuario(Authentication authentication, @RequestBody UsuarioRequest request) {
 		Usuario usuario = null;
 		try {
-			usuario = iUsuarioService.find(id);
+			usuario = iUsuarioService.findByEmail(authentication.getName());
 			if (usuario != null) {
 				usuario.setEmail(request.getEmail());
 				usuario.setPassword(request.getPassword());
@@ -74,33 +76,5 @@ public class UsuarioResource {
 		return new Retorno("Usuario atualizado com Sucesso!", new UsuarioResponse(usuario));
 	}
 
-	// Deleta pelo email
-	@DeleteMapping("/usuario")
-	public Retorno deletarUsuario(@RequestHeader("Token") String token, @RequestBody UsuarioRequest request) {
-		try {
-			Usuario usuario = iUsuarioService.findByEmail(request.getEmail());
-			iUsuarioService.deletar(usuario);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new Retorno(e.getMessage(), e.getClass());
-		}
-		return new Retorno("Usuario Deletado com Sucesso", request);
-
-	}
-
-	@GetMapping("/usuario/{email}")
-	public Retorno getUsuario(@PathVariable String email) {
-		Usuario usuario;
-		try {
-			usuario = iUsuarioService.findByEmail(email);
-			if (usuario == null) {
-				return new Retorno("Usuario não Encontrado", null);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new Retorno(e.getMessage(), e.getClass());
-		}
-		return new Retorno("Sucesso!", new UsuarioResponse(usuario));
-	}
 
 }

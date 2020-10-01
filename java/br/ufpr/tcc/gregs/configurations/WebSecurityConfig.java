@@ -3,6 +3,7 @@ package br.ufpr.tcc.gregs.configurations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -53,10 +54,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// We don't need CSRF for this example
 		httpSecurity.csrf().disable()
 				// dont authenticate this particular request
-				//adicionar aqui recursos aceitos sem autenticacao
-				.authorizeRequests().antMatchers("/authenticate", "/register", "/login", "/health").permitAll().
+				// adicionar aqui recursos aceitos sem autenticacao, se for remover, deixar uma "/" ao lado do método (se não buga)
+				.authorizeRequests().antMatchers(HttpMethod.GET, "/health", "/componente/*", "/pagina/*" ).permitAll()
+				.and().authorizeRequests().antMatchers(HttpMethod.POST, "/login", "/health").permitAll()
+				.and().authorizeRequests().antMatchers(HttpMethod.PUT, "/usuario").permitAll()
+				.and().authorizeRequests().antMatchers(HttpMethod.DELETE, "//").permitAll()
+				.and().authorizeRequests().antMatchers("//").permitAll()
+
+
+
 				// all other requests need to be authenticated
-				anyRequest().authenticated().and().
+				.anyRequest().authenticated().and().
 				// make sure we use stateless session; session won't be used to
 				// store user's state.
 				exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
