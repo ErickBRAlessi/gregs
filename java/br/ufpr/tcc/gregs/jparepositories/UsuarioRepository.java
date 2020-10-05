@@ -10,6 +10,6 @@ import br.ufpr.tcc.gregs.models.Usuario;
 @Repository
 public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
 
-	 @Query("select u from Usuario u join fetch u.permissoes join fetch u.pagina where u.email = ?1")
+	 @Query("select u from Usuario u join fetch u.pagina where u.email = ?1")
 	 Usuario findByEmail(String email);
 }

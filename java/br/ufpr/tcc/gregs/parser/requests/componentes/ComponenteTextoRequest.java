@@ -1,4 +1,4 @@
-package br.ufpr.tcc.gregs.parser.requests;
+package br.ufpr.tcc.gregs.parser.requests.componentes;
 
 import java.util.List;
 

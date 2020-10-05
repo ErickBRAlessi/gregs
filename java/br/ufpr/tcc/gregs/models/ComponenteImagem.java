@@ -18,7 +18,7 @@ public class ComponenteImagem extends Componente {
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private Imagem imagem;
 
-	@Column(name = "descricao")
+	@Column(name = "imagem_descricao")
 	private String descricao;
 
 	public String getTipo() {
