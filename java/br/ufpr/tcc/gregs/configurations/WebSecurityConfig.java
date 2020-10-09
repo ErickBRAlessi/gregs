@@ -15,6 +15,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -39,6 +42,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowCredentials(true);
+		configuration.addAllowedOrigin("http://localhost:4200");
+		configuration.addAllowedHeader("*");
+		configuration.addAllowedMethod("*");
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}
+	
+
+	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
@@ -52,16 +68,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		// We don't need CSRF for this example
-		httpSecurity.csrf().disable().cors().disable()
+		httpSecurity.cors().and().csrf().disable()
 				// dont authenticate this particular request
-				// adicionar aqui recursos aceitos sem autenticacao, se for remover, deixar uma "/" ao lado do método (se não buga)
-				.authorizeRequests().antMatchers(HttpMethod.GET, "/health", "/componente/*", "/pagina/*" ).permitAll()
-				.and().authorizeRequests().antMatchers(HttpMethod.POST, "/login", "/health").permitAll()
-				.and().authorizeRequests().antMatchers(HttpMethod.PUT, "/usuario").permitAll()
-				.and().authorizeRequests().antMatchers(HttpMethod.DELETE, "//").permitAll()
-				.and().authorizeRequests().antMatchers("//").permitAll()
-
-
+				// adicionar aqui recursos aceitos sem autenticacao, se for remover, deixar uma
+				// "/" ao lado do método (se não buga)
+				.authorizeRequests().antMatchers(HttpMethod.GET, "/health", "/componente/*", "/pagina/*").permitAll()
+				.and().authorizeRequests().antMatchers(HttpMethod.POST, "/login", "/health").permitAll().and()
+				.authorizeRequests().antMatchers(HttpMethod.PUT, "/usuario").permitAll().and().authorizeRequests()
+				.antMatchers(HttpMethod.DELETE, "//").permitAll().and().authorizeRequests().antMatchers("//")
+				.permitAll()
 
 				// all other requests need to be authenticated
 				.anyRequest().authenticated().and().
