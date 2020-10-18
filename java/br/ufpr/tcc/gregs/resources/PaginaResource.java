@@ -43,7 +43,6 @@ public class PaginaResource {
 
 		p.getComponentes().clear();
 
-
 		if (paginaRequest.getComponentes() != null) {
 			for (ParsedComponente c : paginaRequest.getComponentes()) {
 				p.getComponentes().add(iComponenteService.findComponente(c.getId()));
@@ -52,17 +51,14 @@ public class PaginaResource {
 
 		iPaginaService.salvar(p);
 		usuario = iUsuarioService.find(usuario.getId());
-		return new ResponseEntity<>(new Retorno("Pagina Atualizada com Sucesso", new PaginaResponse(usuario.getPagina())),
-				HttpStatus.OK);
+		return new ResponseEntity<>(
+				new Retorno("Pagina Atualizada com Sucesso", new PaginaResponse(usuario.getPagina())), HttpStatus.OK);
 	}
-	
+
 	@GetMapping(value = "/pagina/{url}")
 	public ResponseEntity<?> getPaginaUrl(@PathVariable("url") String url) {
 		Pagina p = iPaginaService.findByUrl(url);
-
-		return new ResponseEntity<>(new Retorno("Pagina Encontrada!", new PaginaResponse(p)),
-				HttpStatus.OK);
+		return new ResponseEntity<>(new Retorno("Pagina Encontrada!", new PaginaResponse(p)), HttpStatus.OK);
 	}
-
 
 }

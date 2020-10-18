@@ -28,27 +28,8 @@ public abstract class Neo4JSessionFactory {
 	private static String password = "admin";
 
 	public static Session getSession() {
-
 		Driver driver = GraphDatabase.driver(uri, AuthTokens.basic(user, password));
 		return driver.session();
 	}
 
-	public static void printGreeting(final String message) {
-		try (Session session = Neo4JSessionFactory.getSession()) {
-			String greeting = session.writeTransaction(new TransactionWork<String>() {
-				@Override
-				public String execute(Transaction tx) {
-					Result result = tx.run("CREATE (a:Greeting) " + "SET a.message = $message "
-							+ "RETURN a.message + ', from node ' + id(a)", parameters("message", message));
-					return result.single().get(0).asString();
-				}
-			});
-			System.out.println(greeting);
-		}
-	}
-
-	public static void main(String... args) throws Exception {
-
-		Neo4JSessionFactory.printGreeting("hello, world");
-	}
 }

@@ -57,7 +57,7 @@ public class UsuarioResource {
 	}
 
 	@PostMapping(value = "/usuario/")
-	public Retorno updateUsuario(Authentication authentication, @RequestBody UsuarioRequest request) {
+	public ResponseEntity<Retorno> updateUsuario(Authentication authentication, @RequestBody UsuarioRequest request) {
 		Usuario usuario = null;
 		try {
 			usuario = iUsuarioService.findByEmail(authentication.getName());
@@ -67,14 +67,13 @@ public class UsuarioResource {
 				usuario.getPagina().setUrl(request.getUrl());
 				iUsuarioService.salvar(usuario);
 			} else {
-				return new Retorno("Usuario não Encontrado", null);
+				return new ResponseEntity<>(new Retorno("Usuario não Encontrado", null), HttpStatus.NOT_FOUND);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			return new Retorno(e.getMessage(), e.getClass());
+			return new ResponseEntity<>(new Retorno(e.getMessage(), e.getClass()), HttpStatus.CREATED);
 		}
-		return new Retorno("Usuario atualizado com Sucesso!", new UsuarioResponse(usuario));
+		return new ResponseEntity<>(new Retorno("Usuario Atualizado com Sucesso", new UsuarioResponse(usuario)),
+				HttpStatus.OK);
 	}
-
 
 }
