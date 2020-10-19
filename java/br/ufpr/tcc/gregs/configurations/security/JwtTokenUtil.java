@@ -1,4 +1,4 @@
-package br.ufpr.tcc.gregs.configurations;
+package br.ufpr.tcc.gregs.configurations.security;
 
 import java.io.Serializable;
 import java.util.Date;

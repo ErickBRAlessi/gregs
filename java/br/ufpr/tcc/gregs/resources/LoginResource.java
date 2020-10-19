@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.ufpr.tcc.gregs.configurations.JwtTokenUtil;
+import br.ufpr.tcc.gregs.configurations.security.JwtTokenUtil;
 import br.ufpr.tcc.gregs.models.Pagina;
 import br.ufpr.tcc.gregs.models.Pessoa;
 import br.ufpr.tcc.gregs.models.Retorno;

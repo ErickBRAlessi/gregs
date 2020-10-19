@@ -1,4 +1,4 @@
-package br.ufpr.tcc.gregs.configurations;
+package br.ufpr.tcc.gregs.configurations.security;
 
 import java.io.IOException;
 import java.io.Serializable;

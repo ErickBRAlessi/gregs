@@ -1,4 +1,4 @@
-package br.ufpr.tcc.gregs.configurations;
+package br.ufpr.tcc.gregs.configurations.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

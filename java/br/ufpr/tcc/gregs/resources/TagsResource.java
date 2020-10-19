@@ -24,6 +24,7 @@ import br.ufpr.tcc.gregs.models.Retorno;
 import br.ufpr.tcc.gregs.models.Usuario;
 import br.ufpr.tcc.gregs.parser.responses.UsuarioResponse;
 import br.ufpr.tcc.gregs.service.IUsuarioService;
+import br.ufpr.tcc.gregs.utility.MotorBusca;
 
 @RestController
 @CrossOrigin
@@ -35,33 +36,9 @@ public class TagsResource {
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PutMapping("/tags")
 	public ResponseEntity<?> putTag(Authentication authentication, @RequestBody List<String> tags) {
-
+		Usuario usuario = iUsuarioService.findByEmail(authentication.getName());
 		try {
-			Session s = Neo4JSessionFactory.getSession();
-
-			s.writeTransaction(tx -> {
-				Usuario usuario = iUsuarioService.findByEmail(authentication.getName());
-				tx.run("MATCH (U:Usuario) WHERE U.idRelacional = $id DETACH DELETE U",
-						parameters("id", usuario.getId()));
-				tx.run("CREATE (U:Usuario) SET U.idRelacional = $id, U.nome = $nome",
-						parameters("id", usuario.getId(), "nome", usuario.getPessoa().getNome().toUpperCase().trim()));
-				return 1;
-			});
-
-			tags.forEach(t -> s.writeTransaction(tx -> {
-				Usuario usuario = iUsuarioService.findByEmail(authentication.getName());
-
-				Result result = tx.run("MATCH (T:Tag) WHERE T.nome = $tag RETURN T",
-						parameters("tag", t.toUpperCase().trim()));
-				if (!result.hasNext()) {
-					tx.run("CREATE (T:Tag) SET T.nome = $tag", parameters("tag", t.toUpperCase().trim()));
-				}
-				tx.run("MATCH (U:Usuario),(T:Tag) WHERE U.idRelacional = $idRelacional AND T.nome = $tagNome CREATE (U)-[:CONHECE]->(T)",
-						parameters("idRelacional", usuario.getId(), "tagNome", t.toUpperCase().trim()));
-				return 1;
-			}));
-
-			s.close();
+			MotorBusca.inserirTagsUsuario(tags, usuario);
 			return new ResponseEntity<Retorno>(new Retorno("Tags Inseridas com sucesso", null), HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e);
@@ -81,53 +58,8 @@ public class TagsResource {
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping("/tags/{busca}")
 	public ResponseEntity<?> buscar(@PathVariable String busca) {
-		System.out.println(busca);
 		try {
-			Session s = Neo4JSessionFactory.getSession();
-
-			List<UsuarioResponse> usuarios = new ArrayList<>();
-			s.writeTransaction(tx -> {
-				Result result = tx.run(
-						"MATCH (U:Usuario)-[*1..2]-(B:Usuario) WHERE U.nome STARTS WITH $busca RETURN DISTINCT U.idRelacional, B.idRelacional",
-						parameters("busca", busca.toUpperCase().trim()));
-				boolean first = true;
-				while (result.hasNext()) {
-					Record record = result.next();
-					if (first) {
-						Usuario u = iUsuarioService.find(record.get("U.idRelacional").asLong());
-						if (u != null) {
-							usuarios.add(new UsuarioResponse(u));
-						}
-						first = false;
-					}
-					Usuario u = iUsuarioService.find(record.get("B.idRelacional").asLong());
-					if (u != null) {
-						UsuarioResponse usuarioResponse = new UsuarioResponse(u);
-						if (!usuarios.contains(usuarioResponse)) {
-							usuarios.add(new UsuarioResponse(u));
-						}
-					}
-				}
-
-				result = tx.run(
-						"MATCH (U:Usuario)-[*1..3]-(T:Tag) WHERE T.nome STARTS WITH $busca RETURN DISTINCT U.idRelacional",
-						parameters("busca", busca.toUpperCase().trim()));
-				first = true;
-				while (result.hasNext()) {
-					Record record = result.next();
-					Usuario u = iUsuarioService.find(record.get("U.idRelacional").asLong());
-					if (u != null) {
-						UsuarioResponse usuarioResponse = new UsuarioResponse(u);
-						if (!usuarios.contains(usuarioResponse)) {
-							usuarios.add(new UsuarioResponse(u));
-						}
-					}
-				}
-
-				return 1;
-			});
-
-			s.close();
+			List<UsuarioResponse> usuarios = MotorBusca.buscar(busca, iUsuarioService);
 			return new ResponseEntity<Retorno>(new Retorno("Resultados Encontrados", usuarios), HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e);
