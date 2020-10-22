@@ -68,4 +68,17 @@ public class TagsResource {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping("/tags/all/")
+	public ResponseEntity<?> buscarTodas() {
+		try {
+			List<String> tags = MotorBusca.buscarTags();
+			return new ResponseEntity<Retorno>(new Retorno("Resultados Encontrados", tags), HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println(e);
+			return new ResponseEntity<Retorno>(new Retorno(e.getMessage(), e.getClass()),
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 }

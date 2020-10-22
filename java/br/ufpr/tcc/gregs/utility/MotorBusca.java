@@ -103,4 +103,20 @@ public abstract class MotorBusca {
 		s.close();
 	}
 
+	public static List<String> buscarTags() {
+		Session s = Neo4JSessionFactory.getSession();
+		List<String> tags = new ArrayList<>();
+		s.writeTransaction(tx -> {
+			Result result = tx.run("MATCH (T:Tag) RETURN T.nome", parameters());
+			while (result.hasNext()) {
+				Record record = result.next();
+				tags.add(record.get("T.nome").asString());
+			}
+			return 1;
+		});
+
+		s.close();
+		return tags;
+	}
+
 }
