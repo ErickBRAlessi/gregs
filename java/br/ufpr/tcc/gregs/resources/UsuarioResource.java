@@ -41,6 +41,8 @@ public class UsuarioResource {
 			usuario.setPassword((request.getPassword()));
 
 			usuario.setPagina(new Pagina(request.getUrl(), null));
+			
+			usuario.setImagemUsuario(request.getImagemUsuario());
 
 			iUsuarioService.salvar(usuario);
 		} catch (Exception e) {
@@ -60,6 +62,7 @@ public class UsuarioResource {
 				usuario.setEmail(request.getEmail());
 				usuario.setPassword(request.getPassword());
 				usuario.getPagina().setUrl(request.getUrl());
+				usuario.setImagemUsuario(request.getImagemUsuario());
 				iUsuarioService.salvar(usuario);
 			} else {
 				return new ResponseEntity<>(new Retorno("Usuario não Encontrado", null), HttpStatus.NOT_FOUND);

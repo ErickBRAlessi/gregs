@@ -1,5 +1,7 @@
 package br.ufpr.tcc.gregs.parser.requests;
 
+import br.ufpr.tcc.gregs.models.Imagem;
+
 public class UsuarioRequest {
 
 	private long id;
@@ -8,7 +10,7 @@ public class UsuarioRequest {
 	private String sobrenome;
 	private String password;
 	private String url;
-	private long permissaoId;
+	private Imagem imagemUsuario;
 
 	public String getEmail() {
 		return email;
@@ -34,14 +36,6 @@ public class UsuarioRequest {
 		this.password = password;
 	}
 
-	public long getPermissaoId() {
-		return permissaoId;
-	}
-
-	public void setPermissaoId(long permissaoId) {
-		this.permissaoId = permissaoId;
-	}
-
 	public long getId() {
 		return id;
 	}
@@ -64,6 +58,14 @@ public class UsuarioRequest {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public Imagem getImagemUsuario() {
+		return imagemUsuario;
+	}
+
+	public void setImagemUsuario(Imagem imagemUsuario) {
+		this.imagemUsuario = imagemUsuario;
 	}
 
 }

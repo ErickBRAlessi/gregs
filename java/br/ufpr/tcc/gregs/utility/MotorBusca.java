@@ -3,7 +3,9 @@ package br.ufpr.tcc.gregs.utility;
 import static org.neo4j.driver.Values.parameters;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.neo4j.driver.Record;
 import org.neo4j.driver.Result;
@@ -79,7 +81,7 @@ public abstract class MotorBusca {
 
 	public static void inserirTagsUsuario(List<String> tags, Usuario usuario) {
 		Session s = Neo4JSessionFactory.getSession();
-
+		removerStringDuplicadas(tags);
 		s.writeTransaction(tx -> {
 
 			tx.run("MATCH (U:Usuario) WHERE U.idRelacional = $id DETACH DELETE U", parameters("id", usuario.getId()));
@@ -117,6 +119,30 @@ public abstract class MotorBusca {
 
 		s.close();
 		return tags;
+	}
+
+	
+	public static List<String> buscarTagsdeUsuario(Usuario usuario) {
+		Session s = Neo4JSessionFactory.getSession();
+		List<String> tags = new ArrayList<>();
+		s.writeTransaction(tx -> {
+			Result result = tx.run(
+					"MATCH (T:Tag)-[*1]-(U:Usuario) WHERE U.idRelacional = $idRelacional RETURN DISTINCT T.nome",
+					parameters("idRelacional", usuario.getId()));
+			while (result.hasNext()) {
+				Record record = result.next();
+				tags.add(record.get("T.nome").asString());
+			}
+			return 1;
+		});
+		s.close();
+		return tags;
+	}
+	
+	private static void removerStringDuplicadas(List<String> strings) {
+		Set<String> set = new HashSet<>(strings);
+		strings.clear();
+		strings.addAll(set);
 	}
 
 }

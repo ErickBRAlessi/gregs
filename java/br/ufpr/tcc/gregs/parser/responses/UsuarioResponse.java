@@ -1,8 +1,13 @@
 package br.ufpr.tcc.gregs.parser.responses;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import br.ufpr.tcc.gregs.models.Imagem;
 import br.ufpr.tcc.gregs.models.Pessoa;
 import br.ufpr.tcc.gregs.models.Usuario;
 import br.ufpr.tcc.gregs.parser.ParsedPagina;
+import br.ufpr.tcc.gregs.utility.MotorBusca;
 
 public class UsuarioResponse {
 
@@ -14,6 +19,10 @@ public class UsuarioResponse {
 
 	private ParsedPagina pagina;
 
+	private Imagem imagemUsuario;
+	
+	private List<String> tags;
+	
 	public UsuarioResponse(Usuario user) {
 		this.id = user.getId();
 		if (user.getEmail() != null) {
@@ -25,6 +34,14 @@ public class UsuarioResponse {
 		if (user.getPagina() != null) {
 			this.setPagina(new ParsedPagina(user.getPagina()));
 		}
+		if(user.getImagemUsuario() == null) {
+			this.imagemUsuario = new Imagem();
+		}
+		else {
+			this.imagemUsuario = user.getImagemUsuario();
+		}
+		this.setTags(MotorBusca.buscarTagsdeUsuario(user));
+		
 	}
 
 	public Long getId() {
@@ -57,6 +74,22 @@ public class UsuarioResponse {
 
 	public void setPagina(ParsedPagina pagina) {
 		this.pagina = pagina;
+	}
+
+	public Imagem getImagemUsuario() {
+		return imagemUsuario;
+	}
+
+	public void setImagemUsuario(Imagem imagemUsuario) {
+		this.imagemUsuario = imagemUsuario;
+	}
+	
+	public List<String> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<String> tags) {
+		this.tags = tags;
 	}
 
 	@Override
