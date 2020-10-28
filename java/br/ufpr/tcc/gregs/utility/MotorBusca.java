@@ -81,7 +81,7 @@ public abstract class MotorBusca {
 
 	public static void inserirTagsUsuario(List<String> tags, Usuario usuario) {
 		Session s = Neo4JSessionFactory.getSession();
-		removerStringDuplicadas(tags);
+		removerObjetosDuplicados(tags);
 		s.writeTransaction(tx -> {
 
 			tx.run("MATCH (U:Usuario) WHERE U.idRelacional = $id DETACH DELETE U", parameters("id", usuario.getId()));
@@ -139,10 +139,10 @@ public abstract class MotorBusca {
 		return tags;
 	}
 	
-	private static void removerStringDuplicadas(List<String> strings) {
-		Set<String> set = new HashSet<>(strings);
-		strings.clear();
-		strings.addAll(set);
+	private static <T> void removerObjetosDuplicados(List<T> list) {
+		Set<T> set = new HashSet<>(list);
+		list.clear();
+		list.addAll(set);
 	}
 
 }
