@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.ufpr.tcc.gregs.models.Componente;
+import br.ufpr.tcc.gregs.models.ComponenteImagem;
 import br.ufpr.tcc.gregs.models.ComponenteTexto;
 import br.ufpr.tcc.gregs.models.Retorno;
+import br.ufpr.tcc.gregs.parser.requests.componentes.ComponenteImagemRequest;
 import br.ufpr.tcc.gregs.parser.requests.componentes.ComponenteRequest;
 import br.ufpr.tcc.gregs.parser.requests.componentes.ComponenteTextoRequest;
 import br.ufpr.tcc.gregs.service.IComponenteService;
@@ -45,6 +47,9 @@ public class ComponenteResource {
 		Componente componente = null;
 		if (componenteRequest instanceof ComponenteTextoRequest) {
 			componente = new ComponenteTexto((ComponenteTextoRequest) componenteRequest);
+		}
+		if (componenteRequest instanceof ComponenteImagemRequest) {
+			componente = new ComponenteImagem((ComponenteImagemRequest) componenteRequest);
 		}
 		// adicionar cast e teste para cada tipo de componente
 		if (componente != null) {

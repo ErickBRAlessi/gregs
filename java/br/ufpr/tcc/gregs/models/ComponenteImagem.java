@@ -8,6 +8,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 
+import br.ufpr.tcc.gregs.parser.requests.componentes.ComponenteImagemRequest;
+
 @Entity
 @PrimaryKeyJoinColumn(name = "id")
 public class ComponenteImagem extends Componente {
@@ -20,6 +22,18 @@ public class ComponenteImagem extends Componente {
 
 	@Column(name = "imagem_descricao")
 	private String descricao;
+	
+	public ComponenteImagem() {};
+	
+	public ComponenteImagem(ComponenteImagemRequest componenteImagemRequest) {
+		super.setId(componenteImagemRequest.getId());
+		super.setTitulo(componenteImagemRequest.getTitulo());
+		super.setMostrarTitulo(componenteImagemRequest.isMostrarTitulo());
+		super.setBackgroundColor(componenteImagemRequest.getBackgroundColor());
+		super.setForegroundColor(componenteImagemRequest.getForegroundColor());
+		this.imagem = componenteImagemRequest.getImagem();
+		this.descricao = componenteImagemRequest.getDescricao();
+	}
 
 	public String getTipo() {
 		return TIPO;
