@@ -20,20 +20,28 @@ import br.ufpr.tcc.gregs.service.IUsuarioService;
 @Component
 public abstract class MotorBusca {
 
-	public static List<UsuarioResponse> buscar(String busca, IUsuarioService iUsuarioService) {
+	public static List<UsuarioResponse> buscar(String busca, IUsuarioService iUsuarioService, int limite) {
 		List<UsuarioResponse> usuarios = new ArrayList<>();
-		buscarTags(busca, iUsuarioService, usuarios);
-		buscarUsuarios(busca, iUsuarioService, usuarios);
+		if (limite > 0) {
+				buscarUsuariosTags(busca, iUsuarioService, usuarios, limite);
+			if(usuarios.size() < limite) {
+				buscarUsuariosNome(busca, iUsuarioService, usuarios, limite - usuarios.size());
+			}
+		}
 		return usuarios;
 
 	}
 
-	private static void buscarTags(String busca, IUsuarioService iUsuarioService, List<UsuarioResponse> usuarios) {
+	private static void buscarUsuariosTags(String busca, IUsuarioService iUsuarioService,
+			List<UsuarioResponse> usuarios, int limite) {
+		if(limite == 0) {
+			return;
+		}
 		Session s = Neo4JSessionFactory.getSession();
 		s.writeTransaction(tx -> {
 			Result result = tx.run(
-					"MATCH (U:Usuario)-[*1..2]-(T:Tag) WHERE T.nome STARTS WITH $busca RETURN DISTINCT U.idRelacional",
-					parameters("busca", busca.toUpperCase().trim()));
+					"MATCH (U:Usuario)-[*1..2]-(T:Tag) WHERE T.nome STARTS WITH $busca RETURN DISTINCT U.idRelacional LIMIT $limite",
+					parameters("busca", busca.toUpperCase().trim(), "limite", limite));
 			while (result.hasNext()) {
 				Record record = result.next();
 				Usuario u = iUsuarioService.find(record.get("U.idRelacional").asLong());
@@ -49,12 +57,15 @@ public abstract class MotorBusca {
 		s.close();
 	}
 
-	private static void buscarUsuarios(String busca, IUsuarioService iUsuarioService, List<UsuarioResponse> usuarios) {
+	private static void buscarUsuariosNome(String busca, IUsuarioService iUsuarioService, List<UsuarioResponse> usuarios, int limite) {
+		if(limite == 0) {
+			return;
+		}
 		Session s = Neo4JSessionFactory.getSession();
 		s.writeTransaction(tx -> {
 			Result result = tx.run(
-					"MATCH (U:Usuario)-[*1..3]-(B:Usuario) WHERE U.nome STARTS WITH $busca RETURN DISTINCT U.idRelacional, B.idRelacional",
-					parameters("busca", busca.toUpperCase().trim()));
+					"MATCH (U:Usuario)-[*1..3]-(B:Usuario) WHERE U.nome STARTS WITH $busca RETURN DISTINCT U.idRelacional, B.idRelacional LIMIT $limite",
+					parameters("busca", busca.toUpperCase().trim(), "limite", limite));
 			boolean first = true;
 			while (result.hasNext()) {
 				Record record = result.next();
@@ -121,7 +132,6 @@ public abstract class MotorBusca {
 		return tags;
 	}
 
-	
 	public static List<String> buscarTagsdeUsuario(Usuario usuario) {
 		Session s = Neo4JSessionFactory.getSession();
 		List<String> tags = new ArrayList<>();
@@ -138,7 +148,7 @@ public abstract class MotorBusca {
 		s.close();
 		return tags;
 	}
-	
+
 	private static <T> void removerObjetosDuplicados(List<T> list) {
 		Set<T> set = new HashSet<>(list);
 		list.clear();

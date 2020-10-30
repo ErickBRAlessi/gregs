@@ -19,15 +19,5 @@ public class CheckHealth {
 	public Retorno greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
 		return new Retorno(String.format(TEMPLATE, name), null);
 	}
-	
-	@PostMapping("/health")
-	public Retorno greeting1(@RequestParam(value = "name", defaultValue = "World") String name) {
-		return new Retorno(String.format(TEMPLATE, name), null);
-	}
-	
-	@PutMapping("/health")
-	public Retorno greeting2(@RequestParam(value = "name", defaultValue = "World") String name) {
-		return new Retorno(String.format(TEMPLATE, name), null);
-	}
-	
+		
 }
