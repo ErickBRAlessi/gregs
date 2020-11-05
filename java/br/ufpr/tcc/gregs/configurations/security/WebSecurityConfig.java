@@ -74,7 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// adicionar aqui recursos aceitos sem autenticacao, se for remover, deixar uma
 				// "/" ao lado do método (se não buga)
 				.authorizeRequests().antMatchers(HttpMethod.GET, "/health", "/componente/*", "/pagina/*", "/tags/*", "/tags", "/usuarios", "/usuarios/*").permitAll()
-				.and().authorizeRequests().antMatchers(HttpMethod.POST, "/login", "/usuario").permitAll().and()
+				.and().authorizeRequests().antMatchers(HttpMethod.POST, "/login", "/usuarios").permitAll().and()
 				.authorizeRequests().antMatchers(HttpMethod.PUT, "//").permitAll().and().authorizeRequests()
 				.antMatchers(HttpMethod.DELETE, "//").permitAll().and().authorizeRequests().antMatchers("//")
 				.permitAll()

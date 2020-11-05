@@ -18,6 +18,8 @@ public interface IUsuarioService {
 	void deletarUsuario(long id);
 	
 	public Usuario findByEmail(String email);
+
+	void atualizar(Usuario usuario);
 	
 
 }

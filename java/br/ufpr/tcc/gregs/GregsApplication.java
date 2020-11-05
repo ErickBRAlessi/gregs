@@ -52,7 +52,7 @@ public class GregsApplication {
 			Pessoa pessoaAdm = new Pessoa("ADMINISTRADOR", "ADMLASTNAME");
 			Pessoa pessoaCli = new Pessoa("CLIENTE", "CLILASTNAME");
 
-			Usuario userAdm = new Usuario("adm@adm.com", "adm", pessoaAdm);
+			Usuario userAdm = new Usuario("a", "asdasd", pessoaAdm);
 			Usuario userCli = new Usuario("cli@cli.com", "cli", pessoaCli);
 
 			userAdm.setPagina(new Pagina("paginaDoAdm", new ArrayList<Componente>()));

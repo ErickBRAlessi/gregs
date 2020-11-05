@@ -5,7 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import br.ufpr.tcc.gregs.models.Pagina;
-import br.ufpr.tcc.gregs.models.Usuario;
 
 
 @Repository

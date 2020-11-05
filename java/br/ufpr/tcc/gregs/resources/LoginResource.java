@@ -8,7 +8,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.ufpr.tcc.gregs.configurations.security.JwtTokenUtil;
-import br.ufpr.tcc.gregs.models.Pagina;
-import br.ufpr.tcc.gregs.models.Pessoa;
 import br.ufpr.tcc.gregs.models.Retorno;
 import br.ufpr.tcc.gregs.models.Usuario;
 import br.ufpr.tcc.gregs.parser.requests.LoginRequest;
-import br.ufpr.tcc.gregs.parser.requests.UsuarioRequest;
 import br.ufpr.tcc.gregs.parser.responses.JwtResponse;
 import br.ufpr.tcc.gregs.parser.responses.UsuarioResponse;
 import br.ufpr.tcc.gregs.service.UsuarioService;
@@ -58,7 +54,8 @@ public class LoginResource {
 		return new ResponseEntity<>(new Retorno("Login Efetuado com Sucesso", new UsuarioResponse(usuario)),
 				HttpStatus.OK);
 	}
-
+	
+	
 	private void authenticate(String email, String password) throws Exception {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));

@@ -1,6 +1,5 @@
 package br.ufpr.tcc.gregs.parser.responses;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.ufpr.tcc.gregs.models.Imagem;
@@ -41,7 +40,6 @@ public class UsuarioResponse {
 			this.imagemUsuario = user.getImagemUsuario();
 		}
 		this.setTags(MotorBusca.buscarTagsdeUsuario(user));
-		
 	}
 
 	public Long getId() {

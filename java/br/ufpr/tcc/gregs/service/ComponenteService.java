@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import br.ufpr.tcc.gregs.jparepositories.ComponenteRepository;
 import br.ufpr.tcc.gregs.models.Componente;
-import br.ufpr.tcc.gregs.models.Usuario;
 
 @Service
 public class ComponenteService implements IComponenteService {

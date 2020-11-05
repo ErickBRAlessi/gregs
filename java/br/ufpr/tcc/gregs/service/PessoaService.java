@@ -2,13 +2,12 @@ package br.ufpr.tcc.gregs.service;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.ufpr.tcc.gregs.jparepositories.PessoaRepository;
-import br.ufpr.tcc.gregs.jparepositories.UsuarioRepository;
 import br.ufpr.tcc.gregs.models.Pessoa;
-import br.ufpr.tcc.gregs.models.Usuario;
 
 @Service
 public class PessoaService implements IPessoaService {

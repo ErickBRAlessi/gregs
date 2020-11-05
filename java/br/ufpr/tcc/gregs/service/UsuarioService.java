@@ -32,6 +32,13 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 		usuario.setPassword(bcryptEncoder.encode(usuario.getPassword()));
 		repository.save(usuario);
 	}
+	
+	@Override
+	public void atualizar(Usuario usuario) {
+		repository.save(usuario);
+	}
+	
+	
 
 	@Override
 	public Usuario find(Long id) {

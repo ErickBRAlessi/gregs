@@ -13,7 +13,7 @@ public class Imagem {
 	
 	public Imagem() {};
 	
-	public Imagem(String nome, String base64Img, String url) {
+	public Imagem(String nome, byte[] base64Img, String url) {
 		this.nome = nome;
 		this.base64Img = base64Img;
 		this.url = url;
@@ -27,10 +27,10 @@ public class Imagem {
 	@Column(name = "nome")
 	private String nome;
 
-	@Column(name = "base_64_img", length = 1024)
-	private String base64Img;
+	@Column(name = "base_64_img")
+	private byte[] base64Img;
 
-	@Column(name = "url")
+	@Column(name = "url",  nullable = true)
 	private String url;
 
 	public long getId() {
@@ -41,11 +41,11 @@ public class Imagem {
 		this.id = id;
 	}
 
-	public String getBase64Img() {
+	public byte[] getBase64Img() {
 		return base64Img;
 	}
 
-	public void setBase64Img(String base64Img) {
+	public void setBase64Img(byte[] base64Img) {
 		this.base64Img = base64Img;
 	}
 

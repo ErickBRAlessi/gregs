@@ -17,11 +17,9 @@ import br.ufpr.tcc.gregs.models.Usuario;
 import br.ufpr.tcc.gregs.parser.ParsedComponente;
 import br.ufpr.tcc.gregs.parser.requests.PaginaRequest;
 import br.ufpr.tcc.gregs.parser.responses.PaginaResponse;
-import br.ufpr.tcc.gregs.parser.responses.UsuarioResponse;
 import br.ufpr.tcc.gregs.service.IComponenteService;
 import br.ufpr.tcc.gregs.service.IPaginaService;
 import br.ufpr.tcc.gregs.service.IUsuarioService;
-import br.ufpr.tcc.gregs.service.PaginaService;
 
 @RestController
 @CrossOrigin
