@@ -8,7 +8,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 
-import br.ufpr.tcc.gregs.parser.requests.componentes.ComponenteImagemRequest;
+import br.ufpr.tcc.gregs.dto.requests.componentes.ComponenteImagemRequest;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "id")

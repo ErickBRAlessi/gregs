@@ -19,7 +19,5 @@ public interface IUsuarioService {
 	
 	public Usuario findByEmail(String email);
 
-	void atualizar(Usuario usuario);
-	
 
 }

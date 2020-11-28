@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.ufpr.tcc.gregs.dto.ParsedComponente;
+import br.ufpr.tcc.gregs.dto.requests.PaginaRequest;
+import br.ufpr.tcc.gregs.dto.responses.PaginaResponse;
 import br.ufpr.tcc.gregs.models.Pagina;
 import br.ufpr.tcc.gregs.models.Retorno;
 import br.ufpr.tcc.gregs.models.Usuario;
-import br.ufpr.tcc.gregs.parser.ParsedComponente;
-import br.ufpr.tcc.gregs.parser.requests.PaginaRequest;
-import br.ufpr.tcc.gregs.parser.responses.PaginaResponse;
 import br.ufpr.tcc.gregs.service.IComponenteService;
 import br.ufpr.tcc.gregs.service.IPaginaService;
 import br.ufpr.tcc.gregs.service.IUsuarioService;
@@ -56,7 +56,12 @@ public class PaginaResource {
 	@GetMapping(value = "/pagina/{url}")
 	public ResponseEntity<?> getPaginaUrl(@PathVariable("url") String url) {
 		Pagina p = iPaginaService.findByUrl(url);
-		return new ResponseEntity<>(new Retorno("Pagina Encontrada!", new PaginaResponse(p)), HttpStatus.OK);
+		try {
+			return new ResponseEntity<>(new Retorno("Pagina Encontrada!", new PaginaResponse(p)), HttpStatus.OK);
+		} catch(Exception e) {
+			return new ResponseEntity<>(new Retorno("Pagina Não Disponível", null), HttpStatus.NOT_FOUND);
+
+		}
 	}
 
 }

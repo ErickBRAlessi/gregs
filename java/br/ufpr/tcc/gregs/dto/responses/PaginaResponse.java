@@ -1,7 +1,7 @@
-package br.ufpr.tcc.gregs.parser.responses;
+package br.ufpr.tcc.gregs.dto.responses;
 
+import br.ufpr.tcc.gregs.dto.ParsedPagina;
 import br.ufpr.tcc.gregs.models.Pagina;
-import br.ufpr.tcc.gregs.parser.ParsedPagina;
 
 public class PaginaResponse {
 	

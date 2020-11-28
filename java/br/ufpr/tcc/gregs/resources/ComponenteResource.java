@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.ufpr.tcc.gregs.dto.requests.componentes.ComponenteImagemRequest;
+import br.ufpr.tcc.gregs.dto.requests.componentes.ComponenteRequest;
+import br.ufpr.tcc.gregs.dto.requests.componentes.ComponenteTextoRequest;
 import br.ufpr.tcc.gregs.models.Componente;
 import br.ufpr.tcc.gregs.models.ComponenteImagem;
 import br.ufpr.tcc.gregs.models.ComponenteTexto;
 import br.ufpr.tcc.gregs.models.Retorno;
-import br.ufpr.tcc.gregs.parser.requests.componentes.ComponenteImagemRequest;
-import br.ufpr.tcc.gregs.parser.requests.componentes.ComponenteRequest;
-import br.ufpr.tcc.gregs.parser.requests.componentes.ComponenteTextoRequest;
 import br.ufpr.tcc.gregs.service.IComponenteService;
 
 @RestController

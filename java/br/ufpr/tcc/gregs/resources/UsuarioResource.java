@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.ufpr.tcc.gregs.dto.ParsedUsuarioConfiguracoes;
+import br.ufpr.tcc.gregs.dto.requests.UsuarioRequest;
+import br.ufpr.tcc.gregs.dto.responses.UsuarioResponse;
 import br.ufpr.tcc.gregs.models.Pagina;
 import br.ufpr.tcc.gregs.models.Pessoa;
 import br.ufpr.tcc.gregs.models.Retorno;
 import br.ufpr.tcc.gregs.models.Usuario;
-import br.ufpr.tcc.gregs.parser.ParsedUsuarioConfiguracoes;
-import br.ufpr.tcc.gregs.parser.requests.UsuarioRequest;
-import br.ufpr.tcc.gregs.parser.responses.UsuarioResponse;
 import br.ufpr.tcc.gregs.service.IPessoaService;
 import br.ufpr.tcc.gregs.service.IUsuarioService;
 import br.ufpr.tcc.gregs.utility.MotorBusca;
@@ -68,14 +68,18 @@ public class UsuarioResource {
 			usuario = iUsuarioService.findByEmail(authentication.getName());
 			if (usuario != null) {
 				usuario.setEmail(request.getEmail());
-				usuario.setPassword(request.getPassword() != null ? request.getPassword() : usuario.getPassword());
+
+				if (request.getPassword() != null) {
+					usuario.setPassword(request.getPassword());
+				}
+				
 				usuario.getPagina().setUrl(request.getUrl());
 				usuario.setImagemUsuario(request.getImagemUsuario());
 
 				usuario.getPessoa().setNome(request.getNome());
 				usuario.getPessoa().setSobrenome(request.getSobrenome());
 
-				iUsuarioService.atualizar(usuario);
+				iUsuarioService.salvar(usuario);
 
 			} else {
 				return new ResponseEntity<>(new Retorno("Usuario não Encontrado", null), HttpStatus.NOT_FOUND);
@@ -109,7 +113,8 @@ public class UsuarioResource {
 	@GetMapping(value = "/usuarios/configs")
 	public ResponseEntity<?> configsUsuarioLogado(Authentication authentication) {
 		Usuario usuario = iUsuarioService.findByEmail(authentication.getName());
-		return new ResponseEntity<>(new Retorno("Login Efetuado com Sucesso", new ParsedUsuarioConfiguracoes(usuario)),
+		return new ResponseEntity<>(
+				new Retorno("Configurações Obtidas com Sucesso", new ParsedUsuarioConfiguracoes(usuario)),
 				HttpStatus.OK);
 	}
 

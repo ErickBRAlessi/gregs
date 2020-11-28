@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.ufpr.tcc.gregs.configurations.security.JwtTokenUtil;
+import br.ufpr.tcc.gregs.dto.requests.LoginRequest;
+import br.ufpr.tcc.gregs.dto.responses.JwtResponse;
+import br.ufpr.tcc.gregs.dto.responses.UsuarioResponse;
 import br.ufpr.tcc.gregs.models.Retorno;
 import br.ufpr.tcc.gregs.models.Usuario;
-import br.ufpr.tcc.gregs.parser.requests.LoginRequest;
-import br.ufpr.tcc.gregs.parser.responses.JwtResponse;
-import br.ufpr.tcc.gregs.parser.responses.UsuarioResponse;
 import br.ufpr.tcc.gregs.service.UsuarioService;
 
 @RestController

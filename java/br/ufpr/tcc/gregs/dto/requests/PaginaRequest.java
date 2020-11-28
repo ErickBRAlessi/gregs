@@ -1,8 +1,8 @@
-package br.ufpr.tcc.gregs.parser.requests;
+package br.ufpr.tcc.gregs.dto.requests;
 
 import java.util.List;
 
-import br.ufpr.tcc.gregs.parser.ParsedComponente;
+import br.ufpr.tcc.gregs.dto.ParsedComponente;
 
 public class PaginaRequest {
 

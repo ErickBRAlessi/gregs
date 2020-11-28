@@ -12,9 +12,9 @@ import org.neo4j.driver.Result;
 import org.neo4j.driver.Session;
 import org.springframework.stereotype.Component;
 
+import br.ufpr.tcc.gregs.dto.responses.UsuarioResponse;
 import br.ufpr.tcc.gregs.graph.Neo4JSessionFactory;
 import br.ufpr.tcc.gregs.models.Usuario;
-import br.ufpr.tcc.gregs.parser.responses.UsuarioResponse;
 import br.ufpr.tcc.gregs.service.IUsuarioService;
 
 @Component
@@ -40,7 +40,7 @@ public abstract class MotorBusca {
 		Session s = Neo4JSessionFactory.getSession();
 		s.writeTransaction(tx -> {
 			Result result = tx.run(
-					"MATCH (U:Usuario)-[*1..2]-(T:Tag) WHERE T.nome STARTS WITH $busca RETURN DISTINCT U.idRelacional LIMIT $limite",
+					"MATCH (U:Usuario)-[*1..3]-(T:Tag) WHERE T.nome STARTS WITH $busca RETURN DISTINCT U.idRelacional LIMIT $limite",
 					parameters("busca", busca.toUpperCase().trim(), "limite", limite));
 			while (result.hasNext()) {
 				Record record = result.next();

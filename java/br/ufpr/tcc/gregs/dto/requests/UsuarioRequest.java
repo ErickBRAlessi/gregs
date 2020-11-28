@@ -1,4 +1,4 @@
-package br.ufpr.tcc.gregs.parser.requests;
+package br.ufpr.tcc.gregs.dto.requests;
 
 import br.ufpr.tcc.gregs.models.Imagem;
 

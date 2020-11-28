@@ -34,13 +34,6 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 	}
 	
 	@Override
-	public void atualizar(Usuario usuario) {
-		repository.save(usuario);
-	}
-	
-	
-
-	@Override
 	public Usuario find(Long id) {
 		Optional<Usuario> usuario = repository.findById(id);
 		if (usuario.isPresent()) {

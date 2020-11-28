@@ -13,7 +13,7 @@ import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 
-import br.ufpr.tcc.gregs.parser.requests.componentes.ComponenteTextoRequest;
+import br.ufpr.tcc.gregs.dto.requests.componentes.ComponenteTextoRequest;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "id")

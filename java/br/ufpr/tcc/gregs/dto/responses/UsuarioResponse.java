@@ -1,11 +1,11 @@
-package br.ufpr.tcc.gregs.parser.responses;
+package br.ufpr.tcc.gregs.dto.responses;
 
 import java.util.List;
 
+import br.ufpr.tcc.gregs.dto.ParsedPagina;
 import br.ufpr.tcc.gregs.models.Imagem;
 import br.ufpr.tcc.gregs.models.Pessoa;
 import br.ufpr.tcc.gregs.models.Usuario;
-import br.ufpr.tcc.gregs.parser.ParsedPagina;
 import br.ufpr.tcc.gregs.utility.MotorBusca;
 
 public class UsuarioResponse {

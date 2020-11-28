@@ -1,4 +1,4 @@
-package br.ufpr.tcc.gregs.parser;
+package br.ufpr.tcc.gregs.dto;
 
 import br.ufpr.tcc.gregs.models.Componente;
 
