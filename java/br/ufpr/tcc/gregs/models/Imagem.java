@@ -32,7 +32,7 @@ public class Imagem {
 
 	@Column(name = "url",  nullable = true)
 	private String url;
-
+	
 	public long getId() {
 		return id;
 	}

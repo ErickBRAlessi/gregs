@@ -1,5 +1,6 @@
 package br.ufpr.tcc.gregs.resources;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,15 @@ import org.springframework.web.bind.annotation.RestController;
 import br.ufpr.tcc.gregs.dto.ParsedUsuarioConfiguracoes;
 import br.ufpr.tcc.gregs.dto.requests.UsuarioRequest;
 import br.ufpr.tcc.gregs.dto.responses.UsuarioResponse;
+import br.ufpr.tcc.gregs.models.Componente;
+import br.ufpr.tcc.gregs.models.ComponenteBio;
 import br.ufpr.tcc.gregs.models.Pagina;
 import br.ufpr.tcc.gregs.models.Pessoa;
 import br.ufpr.tcc.gregs.models.Retorno;
+import br.ufpr.tcc.gregs.models.Texto;
 import br.ufpr.tcc.gregs.models.Usuario;
+import br.ufpr.tcc.gregs.models.Imagem;
+
 import br.ufpr.tcc.gregs.service.IPessoaService;
 import br.ufpr.tcc.gregs.service.IUsuarioService;
 import br.ufpr.tcc.gregs.utility.MotorBusca;
@@ -44,11 +50,18 @@ public class UsuarioResource {
 			pessoa.setSobrenome(request.getSobrenome());
 			iPessoaService.inserirPessoa(pessoa);
 
+			usuario.setImagemUsuario(request.getImagemUsuario());
 			usuario.setPessoa(pessoa);
 			usuario.setEmail(request.getEmail());
 			usuario.setPassword((request.getPassword()));
 
-			usuario.setPagina(new Pagina(request.getUrl(), null));
+			//componente automatico bio
+			List<Componente> componentes = new ArrayList<>();
+			//se não construir uma imagem, ele vai utilizar a mesma referencia no banco, quando for atualizar o perfil ainda estara usando a mesma img e vai dar pau
+			componentes.add(new ComponenteBio(new Imagem(request.getImagemUsuario().getNome(), request.getImagemUsuario()
+					.getBase64Img(), request.getImagemUsuario().getUrl()), new Texto((request.getNome() + " " + request.getSobrenome()), "")));
+			
+			usuario.setPagina(new Pagina(request.getUrl(), componentes));
 
 			usuario.setImagemUsuario(request.getImagemUsuario());
 
@@ -72,7 +85,7 @@ public class UsuarioResource {
 				if (request.getPassword() != null) {
 					usuario.setPassword(request.getPassword());
 				}
-				
+
 				usuario.getPagina().setUrl(request.getUrl());
 				usuario.setImagemUsuario(request.getImagemUsuario());
 

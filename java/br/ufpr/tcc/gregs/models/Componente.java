@@ -12,9 +12,10 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "tipo")
-@JsonSubTypes({ @JsonSubTypes.Type(value = ComponenteImagem.class, name = "ComponenteImagem"),
+@JsonSubTypes(// adicionar aqui subtypes
+		{ @JsonSubTypes.Type(value = ComponenteBio.class, name = "ComponenteBio"), 
+		@JsonSubTypes.Type(value = ComponenteImagem.class, name = "ComponenteImagem"),
 		@JsonSubTypes.Type(value = ComponenteFlickr.class, name = "ComponenteFlickr"),
-		//adicionar aqui subtypes
 		@JsonSubTypes.Type(value = ComponenteTexto.class, name = "ComponenteTexto") })
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
