@@ -11,17 +11,17 @@ import org.springframework.stereotype.Component;
 public abstract class Neo4JSessionFactory {
 
 	@Value("${neo4j.uri}")
-	private static String uri = "bolt://localhost:7687/";
+	private static final String uri = "bolt://localhost:7687/";
 
 	//ERICK: admin
 	//BRUNO: neo4j
 	@Value("${neo4j.user}")
-	private static String user = "admin";
+	private static final String user = "neo4j";
 
 	//ERICK: admin
 	//BRUNO: admin
 	@Value("${neo4j.password}")
-	private static String password = "admin";
+	private static final String password = "admin";
 
 	public static Session getSession() {
 		try {			

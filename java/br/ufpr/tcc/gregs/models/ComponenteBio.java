@@ -23,9 +23,9 @@ public class ComponenteBio extends Componente {
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private Texto texto;
 	
-	public ComponenteBio() {};
-	
-	public ComponenteBio(Imagem imagem, Texto texto) {
+	public ComponenteBio() {}
+
+    public ComponenteBio(Imagem imagem, Texto texto) {
 		this.imagem = imagem;
 		this.texto = texto;
 	}

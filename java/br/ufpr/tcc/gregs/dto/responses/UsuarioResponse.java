@@ -94,9 +94,7 @@ public class UsuarioResponse {
 	public boolean equals(Object obj) {
 		if ( obj instanceof UsuarioResponse) {
 			UsuarioResponse newObj = (UsuarioResponse) obj;
-			if(newObj.getId() == this.getId()) {
-				return true;
-			}
+			return newObj.getId() == this.getId();
 		}
 		return false;
 }

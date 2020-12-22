@@ -58,8 +58,7 @@ public class UsuarioResource {
 			//componente automatico bio
 			List<Componente> componentes = new ArrayList<>();
 			//se não construir uma imagem, ele vai utilizar a mesma referencia no banco, quando for atualizar o perfil ainda estara usando a mesma img e vai dar pau
-			componentes.add(new ComponenteBio(new Imagem(request.getImagemUsuario().getNome(), request.getImagemUsuario()
-					.getBase64Img(), request.getImagemUsuario().getUrl()), new Texto((request.getNome() + " " + request.getSobrenome()), "")));
+			componentes.add(new ComponenteBio(null, new Texto((request.getNome() + " " + request.getSobrenome()), "")));
 			
 			usuario.setPagina(new Pagina(request.getUrl(), componentes));
 

@@ -7,17 +7,17 @@ import br.ufpr.tcc.gregs.models.Pagina;
 
 public interface IPaginaService {
 	
-	public List<Pagina> findAll();
+	List<Pagina> findAll();
 	
-	public Pagina find(Long id);
+	Pagina find(Long id);
 		
-	public void salvar(Pagina pagina);
+	void salvar(Pagina pagina);
 	
-	public void deletar(Pagina pagina);
+	void deletar(Pagina pagina);
 
-	public void deletar(long id);
+	void deletar(long id);
 	
-	public Pagina findByUrl(String url);
+	Pagina findByUrl(String url);
 	
 
 }

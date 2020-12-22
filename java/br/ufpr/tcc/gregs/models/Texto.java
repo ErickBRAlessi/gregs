@@ -12,9 +12,9 @@ import javax.persistence.Table;
 public class Texto {
 
 	public Texto() {
-	};
+	}
 
-	public Texto(String titulo, String texto) {
+    public Texto(String titulo, String texto) {
 		this.titulo = titulo;
 		this.descricao = texto;
 	}

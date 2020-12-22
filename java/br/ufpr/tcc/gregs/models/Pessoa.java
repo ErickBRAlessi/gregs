@@ -22,9 +22,9 @@ public class Pessoa {
 	@Column(name = "pessoa_sobrenome")
 	private String sobrenome;
 	
-	public Pessoa() {};
+	public Pessoa() {}
 
-	public Pessoa(String nome, String sobrenome) {
+    public Pessoa(String nome, String sobrenome) {
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 	}

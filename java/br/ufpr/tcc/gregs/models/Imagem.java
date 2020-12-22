@@ -11,9 +11,9 @@ import javax.persistence.Table;
 @Table(name = "imagem")
 public class Imagem {
 	
-	public Imagem() {};
-	
-	public Imagem(String nome, byte[] base64Img, String url) {
+	public Imagem() {}
+
+    public Imagem(String nome, byte[] base64Img, String url) {
 		this.nome = nome;
 		this.base64Img = base64Img;
 		this.url = url;

@@ -7,17 +7,17 @@ import br.ufpr.tcc.gregs.models.Usuario;
 
 public interface IUsuarioService {
 	
-	public List<Usuario> findAll();
+	List<Usuario> findAll();
 	
-	public Usuario find(Long id);
+	Usuario find(Long id);
 		
-	public void salvar(Usuario usuario);
+	void salvar(Usuario usuario);
 	
-	public void deletar(Usuario usuario);
+	void deletar(Usuario usuario);
 
 	void deletarUsuario(long id);
 	
-	public Usuario findByEmail(String email);
+	Usuario findByEmail(String email);
 
 
 }

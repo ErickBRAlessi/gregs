@@ -23,9 +23,9 @@ public class ComponenteImagem extends Componente {
 	@Column(name = "imagem_descricao")
 	private String descricao;
 	
-	public ComponenteImagem() {};
-	
-	public ComponenteImagem(ComponenteImagemRequest componenteImagemRequest) {
+	public ComponenteImagem() {}
+
+    public ComponenteImagem(ComponenteImagemRequest componenteImagemRequest) {
 		super.setId(componenteImagemRequest.getId());
 		super.setTitulo(componenteImagemRequest.getTitulo());
 		super.setMostrarTitulo(componenteImagemRequest.isMostrarTitulo());

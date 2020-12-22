@@ -8,9 +8,9 @@ public class ParsedComponente {
 	
 	private String tipo;
 
-	public ParsedComponente() {};
-	
-	public ParsedComponente(Componente componente) {
+	public ParsedComponente() {}
+
+    public ParsedComponente(Componente componente) {
 		this.id = componente.getId();
 		this.tipo = componente.getClass().getSimpleName();
 	}

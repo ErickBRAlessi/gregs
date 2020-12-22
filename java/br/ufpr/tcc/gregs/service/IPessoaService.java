@@ -7,13 +7,13 @@ import br.ufpr.tcc.gregs.models.Pessoa;
 
 public interface IPessoaService {
 	
-	public List<Pessoa> findAll();
+	List<Pessoa> findAll();
 	
-	public Pessoa findPessoa(Long id);	
+	Pessoa findPessoa(Long id);
 	
-	public void inserirPessoa(Pessoa pessoa);
+	void inserirPessoa(Pessoa pessoa);
 	
-	public void deletarPessoa(Pessoa pessoa);
+	void deletarPessoa(Pessoa pessoa);
 
 	void deletarPessoa(long id);
 	

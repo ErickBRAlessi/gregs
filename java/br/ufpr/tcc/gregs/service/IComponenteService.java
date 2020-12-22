@@ -5,10 +5,10 @@ import br.ufpr.tcc.gregs.models.Componente;
 
 public interface IComponenteService {
 		
-	public Componente findComponente(Long id);
+	Componente findComponente(Long id);
 		
-	public void salvarComponente(Componente componente);
+	void salvarComponente(Componente componente);
 	
-	public void deletarComponente(Componente componente);
+	void deletarComponente(Componente componente);
 	
 }

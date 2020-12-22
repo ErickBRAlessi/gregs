@@ -17,7 +17,7 @@ public class PessoaService implements IPessoaService {
 
 	@Override
 	public Pessoa findPessoa(Long id) {
-		Optional<Pessoa> pessoa = (Optional<Pessoa>) repository.findById(id);
+		Optional<Pessoa> pessoa = repository.findById(id);
 		if (pessoa.isPresent()) {
 			return pessoa.get();
 		}
