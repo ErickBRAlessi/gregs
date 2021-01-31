@@ -16,7 +16,7 @@ public abstract class Neo4JSessionFactory {
 	//ERICK: admin
 	//BRUNO: neo4j
 	@Value("${neo4j.user}")
-	private static final String user = "neo4j";
+	private static final String user = "admin";
 
 	//ERICK: admin
 	//BRUNO: admin

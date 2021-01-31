@@ -25,8 +25,10 @@ public class ComponenteBio extends Componente {
 	
 	public ComponenteBio() {}
 
-    public ComponenteBio(Imagem imagem, Texto texto) {
-		this.imagem = imagem;
+    public ComponenteBio(String titulo, Imagem imagem, Texto texto) {
+    	super.setTitulo(titulo);
+    	super.setMostrarTitulo(true);
+    	this.imagem = imagem;
 		this.texto = texto;
 	}
 	
