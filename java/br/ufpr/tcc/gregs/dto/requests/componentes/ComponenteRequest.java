@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 @JsonTypeInfo(use = Id.NAME, include = As.PROPERTY, property = "tipo")
 @JsonSubTypes({
-	@JsonSubTypes.Type(value = ComponenteImagemRequest.class, name = "ComponenteBio"),
+	@JsonSubTypes.Type(value = ComponenteBioRequest.class, name = "ComponenteBio"),
     @JsonSubTypes.Type(value = ComponenteTextoRequest.class, name = "ComponenteTexto"),
     @JsonSubTypes.Type(value = ComponenteImagemRequest.class, name = "ComponenteImagem")
 //adicionar outros tipos de request aqui
