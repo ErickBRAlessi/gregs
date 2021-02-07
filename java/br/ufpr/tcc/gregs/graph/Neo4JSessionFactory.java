@@ -32,4 +32,4 @@ public abstract class Neo4JSessionFactory {
 		}
 	}
 
-}
+}	

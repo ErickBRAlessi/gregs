@@ -12,11 +12,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.ufpr.tcc.gregs.dto.requests.componentes.ComponenteBioRequest;
+import br.ufpr.tcc.gregs.dto.requests.componentes.ComponenteFlickrNeoRequest;
+import br.ufpr.tcc.gregs.dto.requests.componentes.ComponenteFreesoundRequest;
+import br.ufpr.tcc.gregs.dto.requests.componentes.ComponenteGithubRequest;
 import br.ufpr.tcc.gregs.dto.requests.componentes.ComponenteImagemRequest;
 import br.ufpr.tcc.gregs.dto.requests.componentes.ComponenteRequest;
 import br.ufpr.tcc.gregs.dto.requests.componentes.ComponenteTextoRequest;
 import br.ufpr.tcc.gregs.models.Componente;
 import br.ufpr.tcc.gregs.models.ComponenteBio;
+import br.ufpr.tcc.gregs.models.ComponenteFlickrNeo;
+import br.ufpr.tcc.gregs.models.ComponenteFreesound;
+import br.ufpr.tcc.gregs.models.ComponenteGithub;
 import br.ufpr.tcc.gregs.models.ComponenteImagem;
 import br.ufpr.tcc.gregs.models.ComponenteTexto;
 import br.ufpr.tcc.gregs.models.Retorno;
@@ -55,6 +61,15 @@ public class ComponenteResource {
 		}
 		if (componenteRequest instanceof ComponenteImagemRequest) {
 			componente = new ComponenteImagem((ComponenteImagemRequest) componenteRequest);
+		}
+		if (componenteRequest instanceof ComponenteGithubRequest) {
+			componente = new ComponenteGithub((ComponenteGithubRequest) componenteRequest);
+		}
+		if (componenteRequest instanceof ComponenteFlickrNeoRequest) {
+			componente = new ComponenteFlickrNeo((ComponenteFlickrNeoRequest) componenteRequest);
+		}
+		if (componenteRequest instanceof ComponenteFreesoundRequest) {
+			componente = new ComponenteFreesound((ComponenteFreesoundRequest) componenteRequest);
 		}
 		// adicionar cast e teste para cada tipo de componente
 		if (componente != null) {
