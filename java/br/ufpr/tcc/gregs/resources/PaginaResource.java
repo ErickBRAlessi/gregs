@@ -38,7 +38,7 @@ public class PaginaResource {
 	public ResponseEntity<?> usuarioLogado(Authentication authentication, @RequestBody PaginaRequest paginaRequest) {
 		Usuario usuario = iUsuarioService.findByEmail(authentication.getName());
 		Pagina p = usuario.getPagina();
-
+		p.setBackgroundColor(paginaRequest.getBackgroundColor());
 		p.getComponentes().clear();
 
 		if (paginaRequest.getComponentes() != null) {

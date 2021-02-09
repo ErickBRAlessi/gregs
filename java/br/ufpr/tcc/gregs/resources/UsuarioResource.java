@@ -58,7 +58,7 @@ public class UsuarioResource {
 			//componente automatico bio
 			List<Componente> componentes = new ArrayList<>();
 			//se não construir uma imagem, ele vai utilizar a mesma referencia no banco, quando for atualizar o perfil ainda estara usando a mesma img e vai dar pau
-			componentes.add(new ComponenteBio(null, new Texto((request.getNome() + " " + request.getSobrenome()), "")));
+			componentes.add(new ComponenteBio(request.getNome() + " " + request.getSobrenome(), null, new Texto("", "Escreva aqui seu perfil!")));
 			
 			usuario.setPagina(new Pagina(request.getUrl(), componentes));
 
@@ -103,15 +103,11 @@ public class UsuarioResource {
 				HttpStatus.OK);
 	}
 
-	@CrossOrigin(origins = "http://localhost:4200")
-	@GetMapping("/usuarios")
-	public ResponseEntity<?> buscar(@RequestParam(defaultValue = "1000") int limite) {
-		return buscar("", limite);
-	}
 
+	//aciona motor de busca
 	@CrossOrigin(origins = "http://localhost:4200")
-	@GetMapping(value = "/usuarios", params = "busca")
-	public ResponseEntity<?> buscar(@RequestParam String busca, @RequestParam(defaultValue = "1000") int limite) {
+	@GetMapping(value = "/usuarios")
+	public ResponseEntity<?> buscar(@RequestParam(defaultValue = "") String busca, @RequestParam(defaultValue = "1000") int limite) {
 		try {
 			List<UsuarioResponse> usuarios = MotorBusca.buscar(busca, iUsuarioService, limite);
 			return new ResponseEntity<Retorno>(new Retorno("Resultados Encontrados", usuarios), HttpStatus.OK);

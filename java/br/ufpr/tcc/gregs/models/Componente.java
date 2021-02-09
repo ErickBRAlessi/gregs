@@ -16,7 +16,11 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 		{ @JsonSubTypes.Type(value = ComponenteBio.class, name = "ComponenteBio"), 
 		@JsonSubTypes.Type(value = ComponenteImagem.class, name = "ComponenteImagem"),
 		@JsonSubTypes.Type(value = ComponenteFlickr.class, name = "ComponenteFlickr"),
-		@JsonSubTypes.Type(value = ComponenteTexto.class, name = "ComponenteTexto") })
+		@JsonSubTypes.Type(value = ComponenteTexto.class, name = "ComponenteTexto"),
+		@JsonSubTypes.Type(value = ComponenteGithub.class, name = "ComponenteGithub"),
+		@JsonSubTypes.Type(value = ComponenteFlickrNeo.class, name = "ComponenteFlickrNeo"),
+		@JsonSubTypes.Type(value = ComponenteFreesound.class, name = "ComponenteFreesound")
+		})
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Componente {
@@ -25,6 +29,9 @@ public abstract class Componente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "pk_componente_id", nullable = false)
 	private long id;
+	
+	@Column(name= "ordem")
+	private long ordem;
 
 	@Column(name = "titulo")
 	private String titulo;
@@ -44,6 +51,14 @@ public abstract class Componente {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public long getOrdem() {
+		return ordem;
+	}
+
+	public void setOrdem(long ordem) {
+		this.ordem = ordem;
 	}
 
 	public String getTitulo() {

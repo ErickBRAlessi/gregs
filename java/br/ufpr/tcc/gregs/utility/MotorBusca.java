@@ -71,9 +71,11 @@ public abstract class MotorBusca {
 				Record record = result.next();
 				if (first) {
 					Usuario u = iUsuarioService.find(record.get("U.idRelacional").asLong());
+					if(u != null) {
 					UsuarioResponse usuarioResponse = new UsuarioResponse(u);
 					if (!usuarios.contains(usuarioResponse)) {
 						usuarios.add(new UsuarioResponse(u));
+					}
 					}
 					first = false;
 				}

@@ -14,11 +14,13 @@ public abstract class Neo4JSessionFactory {
 	private static final String uri = "bolt://localhost:7687/";
 
 	//ERICK: admin
+	//CASS : admin
 	//BRUNO: neo4j
 	@Value("${neo4j.user}")
-	private static final String user = "neo4j";
+	private static final String user = "admin";
 
 	//ERICK: admin
+	//CASS: admin
 	//BRUNO: admin
 	@Value("${neo4j.password}")
 	private static final String password = "admin";
@@ -32,4 +34,4 @@ public abstract class Neo4JSessionFactory {
 		}
 	}
 
-}
+}	

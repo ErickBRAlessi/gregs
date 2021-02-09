@@ -8,14 +8,19 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 @JsonTypeInfo(use = Id.NAME, include = As.PROPERTY, property = "tipo")
 @JsonSubTypes({
-	@JsonSubTypes.Type(value = ComponenteImagemRequest.class, name = "ComponenteBio"),
+	@JsonSubTypes.Type(value = ComponenteBioRequest.class, name = "ComponenteBio"),
     @JsonSubTypes.Type(value = ComponenteTextoRequest.class, name = "ComponenteTexto"),
-    @JsonSubTypes.Type(value = ComponenteImagemRequest.class, name = "ComponenteImagem")
+    @JsonSubTypes.Type(value = ComponenteImagemRequest.class, name = "ComponenteImagem"),
+    @JsonSubTypes.Type(value = ComponenteGithubRequest.class, name = "ComponenteGithub"),
+    @JsonSubTypes.Type(value = ComponenteFlickrNeoRequest.class, name = "ComponenteFlickrNeo"),
+    @JsonSubTypes.Type(value = ComponenteFreesoundRequest.class, name = "ComponenteFreesound")
 //adicionar outros tipos de request aqui
 })
 public abstract class ComponenteRequest {
 
 	private long id;
+	
+	private long ordem;
 
 	private String titulo;
 	
@@ -32,7 +37,15 @@ public abstract class ComponenteRequest {
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+		
+	public long getOrdem() {
+		return ordem;
+	}
+
+	public void setOrdem(long ordem) {
+		this.ordem = ordem;
+	}
+
 	public String getTitulo() {
 		return titulo;
 	}

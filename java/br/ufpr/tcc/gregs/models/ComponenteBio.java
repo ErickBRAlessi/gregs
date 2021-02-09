@@ -25,13 +25,16 @@ public class ComponenteBio extends Componente {
 	
 	public ComponenteBio() {}
 
-    public ComponenteBio(Imagem imagem, Texto texto) {
-		this.imagem = imagem;
+    public ComponenteBio(String titulo, Imagem imagem, Texto texto) {
+    	super.setTitulo(titulo);
+    	super.setMostrarTitulo(true);
+    	this.imagem = imagem;
 		this.texto = texto;
 	}
 	
 	public ComponenteBio(ComponenteBioRequest componenteBioRequest) {
 		super.setId(componenteBioRequest.getId());
+		super.setOrdem(componenteBioRequest.getOrdem());
 		super.setTitulo(componenteBioRequest.getTitulo());
 		super.setMostrarTitulo(componenteBioRequest.isMostrarTitulo());
 		super.setBackgroundColor(componenteBioRequest.getBackgroundColor());
