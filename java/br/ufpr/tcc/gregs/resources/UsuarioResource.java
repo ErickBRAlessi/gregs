@@ -111,7 +111,7 @@ public class UsuarioResource {
 
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping(value = "/usuarios", params = "busca")
-	public ResponseEntity<?> buscar(@PathVariable String busca, @RequestParam(defaultValue = "1000") int limite) {
+	public ResponseEntity<?> buscar(@RequestParam String busca, @RequestParam(defaultValue = "1000") int limite) {
 		try {
 			List<UsuarioResponse> usuarios = MotorBusca.buscar(busca, iUsuarioService, limite);
 			return new ResponseEntity<Retorno>(new Retorno("Resultados Encontrados", usuarios), HttpStatus.OK);
