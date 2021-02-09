@@ -27,6 +27,7 @@ public class ComponenteImagem extends Componente {
 
     public ComponenteImagem(ComponenteImagemRequest componenteImagemRequest) {
 		super.setId(componenteImagemRequest.getId());
+		super.setOrdem(componenteImagemRequest.getOrdem());
 		super.setTitulo(componenteImagemRequest.getTitulo());
 		super.setMostrarTitulo(componenteImagemRequest.isMostrarTitulo());
 		super.setBackgroundColor(componenteImagemRequest.getBackgroundColor());

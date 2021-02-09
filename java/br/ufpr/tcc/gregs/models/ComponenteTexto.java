@@ -28,6 +28,7 @@ public class ComponenteTexto extends Componente {
 
 	public ComponenteTexto(ComponenteTextoRequest componenteTextoRequest) {
 		super.setId(componenteTextoRequest.getId());
+		super.setOrdem(componenteTextoRequest.getOrdem());
 		super.setTitulo(componenteTextoRequest.getTitulo());
 		super.setMostrarTitulo(componenteTextoRequest.isMostrarTitulo());
 		super.setBackgroundColor(componenteTextoRequest.getBackgroundColor());

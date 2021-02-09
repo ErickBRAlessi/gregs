@@ -35,6 +35,7 @@ public class ComponenteGithub extends Componente {
 
     public ComponenteGithub(ComponenteGithubRequest componenteGithubRequest) {
 		super.setId(componenteGithubRequest.getId());
+		super.setOrdem(componenteGithubRequest.getOrdem());
 		super.setTitulo(componenteGithubRequest.getTitulo());
 		super.setMostrarTitulo(componenteGithubRequest.isMostrarTitulo());
 		super.setBackgroundColor(componenteGithubRequest.getBackgroundColor());

@@ -34,6 +34,7 @@ public class ComponenteBio extends Componente {
 	
 	public ComponenteBio(ComponenteBioRequest componenteBioRequest) {
 		super.setId(componenteBioRequest.getId());
+		super.setOrdem(componenteBioRequest.getOrdem());
 		super.setTitulo(componenteBioRequest.getTitulo());
 		super.setMostrarTitulo(componenteBioRequest.isMostrarTitulo());
 		super.setBackgroundColor(componenteBioRequest.getBackgroundColor());

@@ -35,6 +35,7 @@ public class ComponenteFlickrNeo extends Componente {
 
     public ComponenteFlickrNeo(ComponenteFlickrNeoRequest componenteFlickrNeoRequest) {
 		super.setId(componenteFlickrNeoRequest.getId());
+		super.setOrdem(componenteFlickrNeoRequest.getOrdem());
 		super.setTitulo(componenteFlickrNeoRequest.getTitulo());
 		super.setMostrarTitulo(componenteFlickrNeoRequest.isMostrarTitulo());
 		super.setBackgroundColor(componenteFlickrNeoRequest.getBackgroundColor());

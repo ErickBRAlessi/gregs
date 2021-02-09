@@ -35,6 +35,7 @@ public class ComponenteFreesound extends Componente {
 
     public ComponenteFreesound(ComponenteFreesoundRequest componenteFreesoundRequest) {
 		super.setId(componenteFreesoundRequest.getId());
+		super.setOrdem(componenteFreesoundRequest.getOrdem());
 		super.setTitulo(componenteFreesoundRequest.getTitulo());
 		super.setMostrarTitulo(componenteFreesoundRequest.isMostrarTitulo());
 		super.setBackgroundColor(componenteFreesoundRequest.getBackgroundColor());
