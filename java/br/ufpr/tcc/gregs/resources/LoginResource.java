@@ -39,7 +39,7 @@ public class LoginResource {
 	@PostMapping(value = "/login")
 	public ResponseEntity<Retorno> createAuthenticationToken(@RequestBody LoginRequest authenticationRequest)
 			throws Exception {
-		authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
+		//authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
 
 		final UserDetails userDetails = usuarioService.loadUserByUsername(authenticationRequest.getEmail());
 		final String token = jwtTokenUtil.generateToken(userDetails);

@@ -112,7 +112,7 @@ public class UsuarioResource {
 			List<UsuarioResponse> usuarios = MotorBusca.buscar(busca, iUsuarioService, limite);
 			return new ResponseEntity<Retorno>(new Retorno("Resultados Encontrados", usuarios), HttpStatus.OK);
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 			return new ResponseEntity<Retorno>(new Retorno(e.getMessage(), e.getClass()),
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
