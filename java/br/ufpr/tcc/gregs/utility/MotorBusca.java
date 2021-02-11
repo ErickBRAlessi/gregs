@@ -157,4 +157,28 @@ public abstract class MotorBusca {
 		list.addAll(set);
 	}
 
+	public static void inserirTagsCarga(List<String> tags, Usuario usuario, Session session) {
+		removerObjetosDuplicados(tags);
+		session.writeTransaction(tx -> {
+
+			tx.run("MATCH (U:Usuario) WHERE U.idRelacional = $id DETACH DELETE U", parameters("id", usuario.getId()));
+			tx.run("CREATE (U:Usuario) SET U.idRelacional = $id, U.nome = $nome",
+					parameters("id", usuario.getId(), "nome", usuario.getPessoa().getNome().toUpperCase().trim()));
+			return 1;
+		});
+
+		tags.forEach(t -> session.writeTransaction(tx -> {
+
+			Result result = tx.run("MATCH (T:Tag) WHERE T.nome = $tag RETURN T",
+					parameters("tag", t.toUpperCase().trim()));
+			if (!result.hasNext()) {
+				tx.run("CREATE (T:Tag) SET T.nome = $tag", parameters("tag", t.toUpperCase().trim()));
+			}
+			tx.run("MATCH (U:Usuario),(T:Tag) WHERE U.idRelacional = $idRelacional AND T.nome = $tagNome CREATE (U)-[:CONHECE]->(T)",
+					parameters("idRelacional", usuario.getId(), "tagNome", t.toUpperCase().trim()));
+			return 1;
+		}));
+
+	}
+
 }

@@ -3,6 +3,8 @@ package br.ufpr.tcc.gregs.utility;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufpr.tcc.gregs.graph.Neo4JSessionFactory;
+import org.neo4j.driver.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -36,6 +38,7 @@ public class DataGenerator {
 	private IPaginaService iPaginaService;
 	
 	public void popular() {
+		Session session = Neo4JSessionFactory.getSession();
 		try {
 
 			for (int i =0 ; i<=20 ; i++){
@@ -71,7 +74,7 @@ public class DataGenerator {
 				iUsuarioService.salvar(usuarioProgramador);
 
 
-				MotorBusca.inserirTagsUsuario(generateTags(), usuarioProgramador);
+				MotorBusca.inserirTagsCarga(generateTags(), usuarioProgramador, session);
 
 				List<Pagina> p = iPaginaService.findAll() ;
 //				for(Pagina x : p) {
@@ -86,7 +89,9 @@ public class DataGenerator {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 		
+		} finally {
+			session.close();
+		}
 	}
 
  	private List<String> generateTags(){
