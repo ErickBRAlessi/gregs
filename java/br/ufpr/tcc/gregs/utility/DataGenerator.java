@@ -46,7 +46,7 @@ public class DataGenerator {
 				cImg.setTitulo("Um Projeto Aí");
 				cImg.setImagem(new Imagem("imagem do projeto",
 						null,
-						null));//arrumar essa img
+						"https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Bloemkool.jpg/800px-Bloemkool.jpg"));//arrumar essa img
 				cImg.setDescricao("Minha Imagem");
 
 				ComponenteTexto cTxt = new ComponenteTexto();
