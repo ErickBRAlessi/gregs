@@ -40,6 +40,9 @@ public class UsuarioResource {
 
 	@Autowired
 	private IPessoaService iPessoaService;
+	
+	@Autowired
+	private MotorBusca motorBusca;
 
 	@PostMapping("/usuarios")
 	public ResponseEntity<Retorno> inserirUsuario(@RequestBody UsuarioRequest request) {
@@ -65,6 +68,9 @@ public class UsuarioResource {
 			usuario.setImagemUsuario(request.getImagemUsuario());
 
 			iUsuarioService.salvar(usuario);
+			//gera usuário no neo4j
+			motorBusca.inserirTagsUsuario(new ArrayList<String>(), usuario);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(new Retorno(e.getMessage(), e.getClass()), HttpStatus.BAD_REQUEST);
@@ -92,7 +98,6 @@ public class UsuarioResource {
 				usuario.getPessoa().setSobrenome(request.getSobrenome());
 
 				iUsuarioService.salvar(usuario);
-
 			} else {
 				return new ResponseEntity<>(new Retorno("Usuario não Encontrado", null), HttpStatus.NOT_FOUND);
 			}
@@ -109,7 +114,7 @@ public class UsuarioResource {
 	@GetMapping(value = "/usuarios")
 	public ResponseEntity<?> buscar(@RequestParam(defaultValue = "") String busca, @RequestParam(defaultValue = "1000") int limite) {
 		try {
-			List<UsuarioResponse> usuarios = MotorBusca.buscar(busca, iUsuarioService, limite);
+			List<UsuarioResponse> usuarios = motorBusca.buscar(busca, limite);
 			return new ResponseEntity<Retorno>(new Retorno("Resultados Encontrados", usuarios), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();

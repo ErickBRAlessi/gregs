@@ -53,6 +53,10 @@ public class Pessoa {
 		this.sobrenome = sobrenome;
 	}
 
+	public String getNomeCompleto() {
+		return nome + " " + sobrenome;
+	}
+	
 	@Override
 	public String toString() {
 		return "Pessoa [id=" + id + ", nome=" + nome + ", sobrenome=" + sobrenome + "]";

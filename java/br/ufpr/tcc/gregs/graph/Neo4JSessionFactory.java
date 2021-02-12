@@ -24,14 +24,20 @@ public abstract class Neo4JSessionFactory {
 	//BRUNO: admin
 	@Value("${neo4j.password}")
 	private static final String password = "admin";
-
+	
+	private static Driver driver;
+	
 	public static Session getSession() {
 		try {			
-			Driver driver = GraphDatabase.driver(uri, AuthTokens.basic(user, password));
-			return driver.session();
+			if(driver == null) {
+				driver = GraphDatabase.driver(uri, AuthTokens.basic(user, password));
+			}
+			return driver.session();			
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
-		}
+		} 
+
 	}
 
 }	
