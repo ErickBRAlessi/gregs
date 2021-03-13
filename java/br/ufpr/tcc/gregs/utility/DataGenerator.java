@@ -44,17 +44,17 @@ public class DataGenerator {
 			for (int i =0 ; i<=20 ; i++){
 				ComponenteImagem cImg = new ComponenteImagem();
 				cImg.setBackgroundColor("#F4F4F4");
-				cImg.setForegroundColor("#F0F0F0");
+				cImg.setForegroundColor("#000000");
 				cImg.setMostrarTitulo(true);
 				cImg.setTitulo("Um Projeto Aí");
 				cImg.setImagem(new Imagem("imagem do projeto",
 						null,
-						"https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Bloemkool.jpg/800px-Bloemkool.jpg"));//arrumar essa img
+						"https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Bloemkool.jpg/800px-Bloemkool.jpg"));
 				cImg.setDescricao("Minha Imagem");
 
 				ComponenteTexto cTxt = new ComponenteTexto();
 				cTxt.setBackgroundColor("#F4F4F4");
-				cTxt.setForegroundColor("#F0F0F0");
+				cTxt.setForegroundColor("#000000 ");
 				cTxt.setMostrarTitulo(true);
 				cTxt.setTitulo("Um Projeto Aí");
 				List<Texto> textos = new ArrayList<>();
