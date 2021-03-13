@@ -23,13 +23,16 @@ public class TagsResource {
 
 	@Autowired
 	private IUsuarioService iUsuarioService;
+	
+	@Autowired
+	private MotorBusca motorBusca;
 
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PutMapping("/tags")
 	public ResponseEntity<?> putTag(Authentication authentication, @RequestBody List<String> tags) {
 		Usuario usuario = iUsuarioService.findByEmail(authentication.getName());
 		try {
-			MotorBusca.inserirTagsUsuario(tags, usuario);
+			motorBusca.inserirTagsUsuario(tags, usuario);
 			return new ResponseEntity<Retorno>(new Retorno("Tags Inseridas com sucesso", null), HttpStatus.CREATED);
 		} catch (Exception e) {
 			System.out.println(e);
@@ -43,7 +46,7 @@ public class TagsResource {
 	@GetMapping("/tags")
 	public ResponseEntity<?> buscarTodas() {
 		try {
-			List<String> tags = MotorBusca.buscarTags();
+			List<String> tags = motorBusca.buscarTags();
 			return new ResponseEntity<Retorno>(new Retorno("Resultados Encontrados", tags), HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e);

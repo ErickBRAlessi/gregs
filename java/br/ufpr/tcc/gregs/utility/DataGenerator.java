@@ -36,9 +36,10 @@ public class DataGenerator {
 
 	@Autowired
 	private IPaginaService iPaginaService;
-	
+		
 	public void popular() {
 		Session session = Neo4JSessionFactory.getSession();
+		MotorBusca.cleanNeo4JDB();
 		try {
 
 			for (int i =0 ; i<=20 ; i++){

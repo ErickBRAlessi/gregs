@@ -2,6 +2,9 @@ package br.ufpr.tcc.gregs.dto.responses;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+
 import br.ufpr.tcc.gregs.dto.ParsedPagina;
 import br.ufpr.tcc.gregs.models.Imagem;
 import br.ufpr.tcc.gregs.models.Pessoa;
@@ -9,6 +12,8 @@ import br.ufpr.tcc.gregs.models.Usuario;
 import br.ufpr.tcc.gregs.utility.MotorBusca;
 
 public class UsuarioResponse {
+	
+	private MotorBusca motorBusca = new MotorBusca();
 
 	private Long id;
 
@@ -21,6 +26,10 @@ public class UsuarioResponse {
 	private Imagem imagemUsuario;
 	
 	private List<String> tags;
+	
+	public UsuarioResponse() {
+		
+	}
 	
 	public UsuarioResponse(Usuario user) {
 		this.id = user.getId();
@@ -39,7 +48,7 @@ public class UsuarioResponse {
 		else {
 			this.imagemUsuario = user.getImagemUsuario();
 		}
-		this.setTags(MotorBusca.buscarTagsdeUsuario(user));
+		this.setTags(motorBusca.buscarTagsdeUsuario(user));
 	}
 
 	public Long getId() {
